@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /**
  * Foundation for Sites by ZURB
  * Version 6.1.2
@@ -15,7 +16,7 @@
 @import 'global/global';
 
 // Components
-@import 'grid/grid';
+@import 'grid/grid';     
 @import 'typography/typography';
 @import 'forms/forms';
 @import 'components/visibility';

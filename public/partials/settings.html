@@ -1,16 +1,38 @@
-<div class="list" ng-controller='SettingsController'>		
-	<form>
-	  <div class="row">
-          <div class="small-12 columns">
-            <input ng-model="url" type="text" placeholder="URL">
-          </div>
-      </div>
 
-    <div class="text-center">
-      <button ng-click="setUrl()" class="button tiny info">Set URL</button>
+<div class="list" ng-controller='SettingsController'>
+    <div class="modal1">
+        <span class="close" ng-click="close()">X</span>
+        <ul id="menu">
+            <li style="cursor:pointer" class="menu-text">Main</li>
+            <li style="cursor:pointer" class="menu-text" ><a href="#/gallery">Gallery</a></li>
+            <li style="cursor:pointer" class="menu-text">Teamwork</li>
+            <li style="cursor:pointer" class="menu-text">Contact</li>
+        </ul>
+        
     </div>
-
-    {{displayText}}
-
-  </form>
+    <nav class="top-bar">
+        <div class="top-bar-left">
+            <ul id="icon" class="hide-for-large dropdown menu" data-dropdown-menu>
+                <li id="listIcon" style="cursor:pointer" ng-click="modal()"><i  class="fa fa-list fa-2x" aria-hidden="true"></i></li>
+            </ul>
+          <ul id="example-menu" class="hide-for-medium-only hide-for-small-only dropdown menu" data-dropdown-menu>
+            <li style="cursor:pointer" class="menu-text">Main</li>
+              <li style="cursor:pointer" class="menu-text" ><a href="#/gallery">Gallery</a></li>
+            <li style="cursor:pointer" class="menu-text">Teamwork</li>
+            <li style="cursor:pointer" class="menu-text">Contact</li>
+            
+          </ul>
+        </div>
+        <div id="box" class="top-bar-right">
+                <form class="form-wrapper cf">
+                    <input type="text" id="search">
+                    <label for="search">Search</label>
+                </form>
+        </div>
+    </nav>
+    <div id="title" class="small-6">
+        <p id="text"><span id="live">LIVE</span> OF PABLO</p>
+        <p id="death">DEATH</p>
+    </div>
+    
 </div>

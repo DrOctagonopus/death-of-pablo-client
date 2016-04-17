@@ -1,0 +1,70 @@
+<div class="list" ng-controller='userController'>    
+    <div class="modal1">
+        <span ng-click="close()" class="close">X</span>
+        <ul id="menu">
+            <li style="cursor:pointer" class="menu-text">Main</li>
+            <li style="cursor:pointer" class="menu-text" ><a href="#/gallery">Gallery</a></li>
+            <li style="cursor:pointer" class="menu-text">Teamwork</li>
+            <li style="cursor:pointer" class="menu-text">Contact</li>
+        </ul>
+    </div>
+    <div class="modal4" ng-click="escapeModal($event);">
+        <span ng-click="close()" class="close">X</span>
+        <form>
+            <textarea name="des" rows="10" cols="30"></textarea>
+            <br>
+            <button class="button" ng-click="updateUserDescription()">Submit</button>
+        </form>
+    </div>
+    <div class="title-bar" data-responsive-toggle="realEstateMenu" data-hide-for="small">
+        <div id="icon2" ng-click="modal()" class="top-bar-right">
+            <i id="listIcon"   class="fa fa-list fa-2x" aria-hidden="true"></i>
+        </div>
+        <div class="title-bar-title" style="font-family: 'Lato';">Death Of Pablo</div>
+    </div>
+
+    <br>
+    <div class="row">
+        <div class="large-12 columns">
+            <h3>My Account <small style="color: white;">Personal Account</small></h3>
+            <hr/>
+        </div>
+    </div>
+ 
+ 
+<div class="row">
+ 
+<div class="large-9 columns" role="content">
+
+<h3><a href="#">My Favorite Singers</a></h3>
+<div class="row small-up-2 medium-up-3 large-up-4">
+    <div class="column" ng-repeat="singer in singers" ng-click="toSingerPage(singer)">
+        <img class="thumbnail" src="{{singer.photo}}">
+        <h5>{{singer.name}}</h5>
+    </div>       
+</div>
+
+
+
+</div>
+ 
+ 
+<aside class="large-3 columns" style="">
+<h5>My Info</h5>
+    <div class="side-nav">
+        <img class="thumbnail" src="{{user.profile}}" style="width: 200px;">
+        <br />
+        <p>User Name: {{user.name}}</p>
+        <p>Total Favorite Singers: {{user.favoriteSingers}} </p>
+        <button class="button">Log Out</button>
+        <button class="button">Delete Account</button>
+    </div>
+<div class="panel">
+    <h5>About Me</h5>
+    <p>{{user.description}}</p>
+    <a href="" ng-click="modifyDescription()">Edit it &rarr;</a>
+    </div>
+</aside>
+ 
+</div>
+</div>

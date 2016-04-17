@@ -1,1 +1,20 @@
 // Insert your variables
+$theme_black: rgb(9, 12, 2);
+$theme_red: rgb(167, 38, 8);
+
+$White:	rgb(255,255,255);
+$Black:	rgb(0,0,0);
+
+$LightOrange:	rgb(255,165,62);
+
+/* Color Config */
+$NavBG: rgba($Black, .8);
+$MenuItem: $LightOrange;
+$MenuTextColor: $White;
+
+/* Menu Config */
+$AnimationTime: .2s;
+$NavMarkerHeight: 40px;
+$NavMarkerWidth: 50px;
+$NavWidth: 300px;
+

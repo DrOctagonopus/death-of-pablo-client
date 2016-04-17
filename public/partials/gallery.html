@@ -1,0 +1,42 @@
+<div id="gallery" class="list" ng-controller='galleryController'>		
+    <div class="modal1">
+        <span ng-click="close()" class="close">X</span>
+        <ul id="menu">
+            <li style="cursor:pointer" class="menu-text">Main</li>
+            <li style="cursor:pointer" class="menu-text" ><a href="#/gallery">Gallery</a></li>
+            <li style="cursor:pointer" class="menu-text">Teamwork</li>
+            <li style="cursor:pointer" class="menu-text">Contact</li>
+        </ul>
+        
+    </div>
+    <div class="off-canvas-wrapper">
+        <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+            <div style="height: 100vh;" class="off-canvas position-left reveal-for-large"  data-off-canvas data-position="left">
+                <div class="row column">
+                    <br>
+                    <img class="thumbnail" src="{{curr.photo}}">
+                    <h5>{{curr.name}}</h5>
+                    <p>{{curr.description}}</p>
+                </div>
+    
+            </div>
+            <div class="off-canvas-content" data-off-canvas-content>
+                <div id="header" class="top-bar primary">
+                    <div class="top-bar-left">
+                        <h1 style="font-family: 'Lato';">Gallery<small style="font-size: 0.5em; color: white">  a full list of all rappers</small></h1>
+                    </div>
+                    <div id="icon2" ng-click="modal()" class="top-bar-right">
+                        <i id="listIcon"   class="fa fa-list fa-2x" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="row small-up-2 medium-up-3 large-up-4">
+                    <div class="column" ng-repeat="singer in singerList" ng-mouseover="displayDetails(singer)" ng-click="toSingerPage(singer)">
+                        <img class="thumbnail" src="{{singer.photo}}">
+                        <h5>{{singer.name}}</h5>
+                    </div>       
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
