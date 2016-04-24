@@ -3,13 +3,27 @@
     <div class="modal1">
         <span class="close" ng-click="close()">X</span>
         <ul id="menu">
-            <li style="cursor:pointer" class="menu-text">Main</li>
+            <li style="cursor:pointer" class="menu-text"><a href="#/setting">Main</a></li>
             <li style="cursor:pointer" class="menu-text" ><a href="#/gallery">Gallery</a></li>
-            <li style="cursor:pointer" class="menu-text">Teamwork</li>
-            <li style="cursor:pointer" class="menu-text">Contact</li>
+            <li style="cursor:pointer" class="menu-text"><a href="#/setting">Contact</a></li>
+            <li style="cursor:pointer" class="menu-text"><a href="#/setting">About</a></li>
         </ul>
         
     </div>
+    <div id="searchbar">
+        <div id="inputArea">
+             <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+             <input type="text" ng-model="searchTerm"/>
+            <div id="close" ng-click="close()">X</div>
+        </div>
+       
+    </div>
+
+        
+    
+       
+
+    
     <nav class="top-bar">
         <div class="top-bar-left">
             <ul id="icon" class="hide-for-large dropdown menu" data-dropdown-menu>
@@ -17,19 +31,49 @@
             </ul>
           <ul id="example-menu" class="hide-for-medium-only hide-for-small-only dropdown menu" data-dropdown-menu>
             <li style="cursor:pointer" class="menu-text">Main</li>
-              <li style="cursor:pointer" class="menu-text" ><a href="#/gallery">Gallery</a></li>
+            <li style="cursor:pointer" class="menu-text" ><a href="#/gallery">Gallery</a></li>
             <li style="cursor:pointer" class="menu-text">Teamwork</li>
             <li style="cursor:pointer" class="menu-text">Contact</li>
-            
           </ul>
+            
         </div>
-        <div id="box" class="top-bar-right">
+        <div id="search_span" class="top-bar-right" ng-click="span()">
+                <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+        </div>
+        <!--<div id="box" class="top-bar-right">
                 <form class="form-wrapper cf">
                     <input type="text" id="search">
                     <label for="search">Search</label>
                 </form>
-        </div>
+        </div>-->
     </nav>
+    <ul id="searchList">
+            <li class="title">
+                <span id="rapper" ng-click="toRapper()">Rapper</span><span id="song" ng-click="toSong()">Song</span>
+                
+            </li>
+            
+            <li class="rapperItem" ng-if="ifrapper" ng-repeat="rapper in rappers | filter: searchTerm">
+                <div class="rapperProfile" style="background-image:url('http://placehold.it/350x150')"></div>
+                <div class="name">
+                    {{rapper.name}}
+                </div>
+                
+            </li>
+            
+            
+            <li class="songItem" ng-repeat = "song in songs | filter: searchTerm">
+                <div class="name" ng-bind-html="song.name | highlight:searchTerm">
+                    {{song.name}}
+                </div>
+                 <div class="rapperName" ng-bind-html="song.details | highlight:searchTerm">
+                    {{song.details}}
+                </div>
+            </li>
+            
+        </ul>
+    
+    
     <div id="title" class="small-6">
         <p id="text"><span id="live">LIVE</span> OF PABLO</p>
         <p id="death">DEATH</p>

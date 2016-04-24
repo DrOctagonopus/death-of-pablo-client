@@ -7,6 +7,126 @@ body{
     -o-background-size: cover;
     background-size: cover;
 }
+
+#searchbar{
+    background-color: black;
+    //color: white;
+    margin-top: -100px;
+    font-weight: bold;
+    height: 100px;
+    width: 100%;
+    
+    #inputArea{
+        color: white;
+        margin: 0 auto;
+        width: 80%;
+        padding-top: 50px;
+        -webkit-box-shadow: 0px 3px 0px 0px rgba(0,0,0,1);
+        -moz-box-shadow: 0px 3px 0px 0px rgba(0,0,0,1);
+        box-shadow: 0px 3px 0px 0px #fefefe;
+        input{
+                width: 80%;
+                display: inline-block;
+                background-color: transparent;
+                border: none;
+                position: absolute;
+                outline: none;
+                color: white;
+                font-size: 2em;
+                padding-bottom: 15px;
+        }
+        input:focus{
+            outline-offset: none;
+            border: none;
+        }
+        #close{
+            float: right;
+            position: relative;
+            bottom: 5px;
+            color: white;
+            display: inline-block;
+            font-size: 2em;
+            padding-bottom: 15px;
+        }
+    }
+}
+
+
+#searchList{
+    color: white;
+    list-style-type: none;
+    background-color: rgba(0,0,0,0.9);
+    width: 82%;
+    position: fixed;
+    left: 8%;
+    top: 100px;
+    display: none;
+    padding-bottom: 10px;
+    max-height: 500px;
+    overflow: scroll;
+    li{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .title{
+        width: 80px;
+        padding-left: 10px;
+        color: black;
+        span{
+            background-color: black;
+            padding-left: 10px;
+            padding-right: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            margin-right: 10px;
+            color: white;
+        }
+                
+    }
+    .rapperItem{
+        background-color: black;
+        padding-left: 10px;
+        margin-bottom: 10px;
+        .rapperProfile{
+          margin-top: 10px;
+          display: inline-block;
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+        }
+        .name{
+            display: inline-block;
+            position: relative;
+            top: -35px;
+            font-size: 1.1em;
+            left: 20px;
+        }
+    }
+    .songItem{
+        display: none;
+        background-color: black;
+        padding-left: 20px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        margin-bottom: 10px;
+        .name{
+            font-size: 1.2em;
+        }
+        .rapperName{
+            color: rgb(247, 244, 244);
+        }
+    }
+}
+#songList{
+    color: white;
+    list-style-type: none;
+    background-color: rgba(0,0,0,0.9);
+    width: 80%;
+    margin: 0 auto;
+}
 .modal1{
     display: none;
     width: 100%;
@@ -105,10 +225,16 @@ body{
             }
         }
         @media screen and (max-width: 799px) {
+            width: 0%;
             #icon {
                 margin-left: -50px;
             }
         }
+    }
+    #search_span{
+        color: white;
+        padding-top: 5px;
+        max-width: 50px;
     }
     #box{
        
@@ -311,6 +437,7 @@ body{
       
       width: $NavWidth;
       z-index: 9001; /* IT'S OVER 9000! */
+      
       #menuToggle
       {
         background: $NavBG;
@@ -389,3 +516,7 @@ body{
     left:auto; 
     transform:skew(8deg) rotate(3deg);
 }
+
+
+
+
