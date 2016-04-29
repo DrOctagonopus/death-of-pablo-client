@@ -707,16 +707,18 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', 'sin
     $scope.close = function(){
       console.log("modal closed");
         $(".modal4").css("display", "none"); 
-  }
-    $scope.updateUserDescription = function(){
-        var text = $("textarea").val();
-        console.log(text);
-        $(".modal4").css("display", "none"); 
-        if(text !== null && text !== undefined){
-            $scope.user.description = text;
-        }
     }
-    
-}])
+    $scope.updateUserDescription = function(){
+      var text = $("textarea").val();
+      console.log(text);
+      $(".modal4").css("display", "none"); 
+      if(text !== null && text !== undefined){
+          $scope.user.description = text;
+      }
+    }
+}]);
 
-
+mp4Controllers.controller('AddSongController', ['$scope', '$http', function($scope, $http){
+  $scope.title = "";
+  
+}]);
