@@ -718,7 +718,23 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', 'sin
     }
 }]);
 
-mp4Controllers.controller('AddSongController', ['$scope', '$http', function($scope, $http){
+mp4Controllers.controller('AddSongController', ['$scope', '$http', 'UserService', function($scope, $http, UserService){
   $scope.title = "";
-  
+  $scope.lyrics = "";
+  $scope.artistId = "";
+  $scope.albumId = "";
+
+  function callback(data) {
+    // For later use, like error message display.
+    $scope.data = data;
+  }
+
+  $scope.submitSong = function() {
+    UserService.post({
+      title: $scope.title,
+      lyrics: $scope.lyrics,
+      artistId: $scope.artistId,
+      albumId: $scope.albumId
+    }, callback, callback);
+  };
 }]);

@@ -37,11 +37,15 @@ mp4Services.factory('songInfo', function(){
     }
 });
 
-mp4Services.factory('Llamas', function($http, $window) {
+mp4Services.factory('UserService', ['$http', '$window', function($http, $window){
     return {
-        get : function() {
-            var baseUrl = $window.sessionStorage.baseurl;
-            return $http.get(baseUrl+'/api/llamas');
+        post : function(req, callback, err) {
+            return $http.post("/user/", req).
+            then(function(resp) {
+                callback(resp.data);
+            }, function(resp) {
+                err(resp.data);
+            });
         }
-    }
-});
+    };
+}])
