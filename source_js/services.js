@@ -49,6 +49,7 @@ mp4Services.factory('songInfo', function(){
     }
 });
 
+<<<<<<< HEAD
 mp4Services.factory('signinRequest', function(){
     var signinRequest = false;
     return{
@@ -63,10 +64,17 @@ mp4Services.factory('signinRequest', function(){
 });
 
 mp4Services.factory('Llamas', function($http, $window) {
+=======
+mp4Services.factory('UserService', ['$http', '$window', function($http, $window){
+>>>>>>> bab238b1049e3af16bf5443760398648a3b941e3
     return {
-        get : function() {
-            var baseUrl = $window.sessionStorage.baseurl;
-            return $http.get(baseUrl+'/api/llamas');
+        post : function(req, callback, err) {
+            return $http.post("/user/", req).
+            then(function(resp) {
+                callback(resp.data);
+            }, function(resp) {
+                err(resp.data);
+            });
         }
-    }
-});
+    };
+}])

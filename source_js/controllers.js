@@ -859,18 +859,35 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
     $scope.close = function(){
       console.log("modal closed");
         $(".modal4").css("display", "none"); 
-  }
-    $scope.updateUserDescription = function(){
-        var text = $("textarea").val();
-        console.log(text);
-        $(".modal4").css("display", "none"); 
-        if(text !== null && text !== undefined){
-            $scope.user.description = text;
-        }
     }
-    
-    
-    
+    $scope.updateUserDescription = function(){
+      var text = $("textarea").val();
+      console.log(text);
+      $(".modal4").css("display", "none"); 
+      if(text !== null && text !== undefined){
+          $scope.user.description = text;
+      }
+    }
+
 }]);
 
+mp4Controllers.controller('AddSongController', ['$scope', '$http', 'UserService', function($scope, $http, UserService){
+  $scope.title = "";
+  $scope.lyrics = "";
+  $scope.artistId = "";
+  $scope.albumId = "";
 
+  function callback(data) {
+    // For later use, like error message display.
+    $scope.data = data;
+  }
+
+  $scope.submitSong = function() {
+    UserService.post({
+      title: $scope.title,
+      lyrics: $scope.lyrics,
+      artistId: $scope.artistId,
+      albumId: $scope.albumId
+    }, callback, callback);
+  };
+}]);

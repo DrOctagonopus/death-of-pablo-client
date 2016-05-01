@@ -1,0 +1,19 @@
+<!-- Partial to add a song to the database. -->
+<form>
+
+	<h1>Add A Song</h1>
+
+	Title: <input type="text" ng-model="title">
+	Lyrics: <input type="text" ng-model="lyrics">
+	<!-- Change this to add multiple artists later. -->
+	ArtistID: <input type="text" ng-model="artistId">
+	AlbumID: <input type="text" ng-model="albumId">
+
+	<!-- Server sets rank, score, rapDensity, rhymesPerVerse, vocabLevel. -->
+
+	<button class="submit" ng-click="submitSong()">
+		Submit
+	</button>
+
+	
+</form>

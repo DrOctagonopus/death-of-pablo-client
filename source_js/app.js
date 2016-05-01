@@ -19,10 +19,32 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'partials/singer.html',
     controller: 'singerController'
   }).
-  
-  when('/user/:name', {
+  when('/user/:id', {
+
     templateUrl: 'partials/user.html',
     controller: 'userController'
+  }).
+  when('/add_user/', {
+     templateUrl: 'partials/add_user.html',
+     controller: 'addUserController'
+   }).
+   when('/add_song/', {
+     templateUrl: 'partials/add_song.html',
+     controller: 'addSongController'
+   }).
+  
+  when('/user/:name', {
+
+    templateUrl: 'partials/user.html',
+    controller: 'userController'
+  }).
+  when('/add_user/', {
+    templateUrl: 'partials/add_user.html',
+    controller: 'addUserController'
+  }).
+  when('/add_song/', {
+    templateUrl: 'partials/add_song.html',
+    controller: 'addSongController'
   }).
   otherwise({
     redirectTo: '/settings'
