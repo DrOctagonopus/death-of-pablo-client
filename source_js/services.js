@@ -61,7 +61,7 @@ mp4Services.factory('signinRequest', function(){
 
 //for communicate with backend
 
-mp4Services.factory('UserService', ['$http', '$window', function($http, $window){
+mp4Services.factory('UserService', function($http, $window){
     return {
         post : function(req, callback, err) {
             return $http.post("/user/", req).
@@ -72,7 +72,7 @@ mp4Services.factory('UserService', ['$http', '$window', function($http, $window)
             });
         }
     };
-}]);
+});
 
 my4Services.factory('artists', function($http, $window) {
     return{
