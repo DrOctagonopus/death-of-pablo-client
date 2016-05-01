@@ -1,11 +1,65 @@
 
 <div class="list" ng-controller='SettingsController'>
+    <div id="register" class="row">
+        <div click-anywhere-but-here="hideRegister" id="inner" class="small-offset-1 small-10 medium-offset-4 medium-6 columns">
+          <div class="signup-panel">
+            <p class="welcome"> Welcome to this awesome app!</p>
+            <form>
+              <div class="row collapse">
+                <div class="icon small-offset-1 small-1  columns">
+                  <span class="prefix"><i class="fa fa-user fa-2x" aria-hidden="true"></i></span>
+                </div>
+                <div class="small-8 input columns">
+                  <input type="text" placeholder="username" ng-model="register_name">
+                </div>
+              </div>
+              <div class="row collapse">
+                <div class="icon small-offset-1 small-1 columns">
+                  <span class="prefix"><i class="fa fa-envelope fa-2x" aria-hidden="true"></i></span>
+                </div>
+                <div class="small-8 input columns">
+                  <input type="text" placeholder="email" ng-model="register_email">
+                </div>
+              </div>
+              <div class="row collapse">
+                <div class="icon small-offset-1 small-1 columns ">
+                  <span class="prefix"><i class="fa fa-lock fa-2x" aria-hidden="true"></i></span>
+                </div>
+                <div class="small-8 input columns ">
+                  <input type="text" placeholder="password" ng-model="register_password">
+                </div>
+              </div>
+            </form>
+            <a ng-click="registerUser()" class="button ">Sign Up! </a>
+             <p>Already have an account? <a ng-click="showLogin()">Login here &raquo</a></p>
+          </div>
+        </div>
+       </div>
+    <div id="login" class="row">
+        <div click-anywhere-but-here="hideLogin" id="inner" class="medium-6 medium-centered large-4 large-centered columns">
+
+            <form>
+              <div class="row column log-in-form">
+                <h4 class="text-center">Log in with you email account</h4>
+                <label>Email
+                  <input type="text" placeholder="somebody@example.com" ng-model="login_email">
+                </label>
+                <label>Password
+                  <input type="text" placeholder="Password" ng-model="login_password">
+                </label>
+                <input id="show-password" type="checkbox"><label for="show-password">Show password</label>
+                <p><a ng-click="loginUser()" type="submit" class="button expanded">Log In</a></p>
+                <p class="text-center"><a href="#">Forgot your password?</a></p>   
+              </div>
+            </form>
+        </div>
+    </div>
     <div class="modal1">
-        <span class="close" ng-click="close()">X</span>
+        <span class="close" ng-click="closeModal()">X</span>
         <ul id="menu">
-            <li style="cursor:pointer" class="menu-text"><a href="#/setting">Main</a></li>
-            <li style="cursor:pointer" class="menu-text" ><a href="#/gallery">Gallery</a></li>
-            <li style="cursor:pointer" class="menu-text"><a href="#/setting">Contact</a></li>
+            <li style="cursor:pointer" class="menu-text"><a class="ATagDefault" href="#/setting">Main</a></li>
+            <li style="cursor:pointer" class="menu-text" ><a class="ATagDefault" href="#/gallery">Gallery</a></li>
+            <li id="account" ng-click="showRegister()" style="cursor:pointer" class="menu-text"><a>Account</a></li>
             <li style="cursor:pointer" class="menu-text"><a href="#/setting">About</a></li>
         </ul>
         
@@ -30,9 +84,9 @@
                 <li id="listIcon" style="cursor:pointer" ng-click="modal()"><i  class="fa fa-list fa-2x" aria-hidden="true"></i></li>
             </ul>
           <ul id="example-menu" class="hide-for-medium-only hide-for-small-only dropdown menu" data-dropdown-menu>
-            <li style="cursor:pointer" class="menu-text">Main</li>
-            <li style="cursor:pointer" class="menu-text" ><a href="#/gallery">Gallery</a></li>
-            <li style="cursor:pointer" class="menu-text">Teamwork</li>
+            <li style="cursor:pointer" class="menu-text"><a class="ATagDefault" href="#/settings">Main</a></li>
+            <li style="cursor:pointer" class="menu-text" ><a class="ATagDefault" href="#/gallery">Gallery</a></li>
+            <li ng-click="showRegister()" style="cursor:pointer" class="menu-text">Account</li>
             <li style="cursor:pointer" class="menu-text">Contact</li>
           </ul>
             
@@ -75,7 +129,7 @@
     
     
     <div id="title" class="small-6">
-        <p id="text"><span id="live">LIVE</span> OF PABLO</p>
+        <p id="text"><span id="live">LIFE</span> OF PABLO</p>
         <p id="death">DEATH</p>
     </div>
     

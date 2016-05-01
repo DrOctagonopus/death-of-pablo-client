@@ -1,11 +1,11 @@
 <div class="list" ng-controller='singerController'>
 
  <div class="modal1">
-        <span ng-click="close()" class="close">X</span>
+        <span ng-click="closeModal()" class="close">X</span>
         <ul id="menu">
-            <li style="cursor:pointer" class="menu-text">Main</li>
-            <li style="cursor:pointer" class="menu-text" ><a href="#/gallery">Gallery</a></li>
-            <li style="cursor:pointer" class="menu-text">Teamwork</li>
+            <li style="cursor:pointer" class="menu-text"><a class="ATagDefault" href="#/settings">Main</a></li>
+            <li style="cursor:pointer" class="menu-text" ><a class="ATagDefault" href="#/gallery">Gallery</a></li>
+            <li style="cursor:pointer" class="menu-text" ng-click="toAccount()">Account</li>
             <li style="cursor:pointer" class="menu-text">Contact</li>
         </ul>
         

@@ -1,17 +1,92 @@
-var mp4Controllers = angular.module('mp4Controllers', ['ngRoute']);
+var mp4Controllers = angular.module('mp4Controllers', ['ngRoute', 'ngCookies']);
 
-mp4Controllers.controller('SettingsController', ['$scope' , '$window' , function($scope, $window) {
+mp4Controllers.directive('clickAnywhereButHere', function($document, $parse) {
+    return {
+        restrict: 'A',
+        scope: {
+            callback : '=clickAnywhereButHere'
+        },
+        link: function(scope, element, attr, ctrl) {
+            var handler = function(event) {
+                //console.log("in handler");
+                //console.log(event.target.tagName);
+                //console.log(event.target.tagName == "LI");
+                if (!element[0].contains(event.target) && event.target.tagName != "LI" && event.target.tagName != "A") {
+                    scope.$apply(scope.callback(event));
+                 }
+            };
+
+            $document.on('click', handler);
+            scope.$on('$destroy', function() {
+                $document.off('click', handler);
+            });
+        }
+    }
+});
+
+mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$location', '$cookieStore', 'formDisplay', 'signinRequest', function($scope, $window, $location, $cookieStore, formDisplay, signinRequest) {
+    var ifmodal = false; //click account in modal
   $scope.url = $window.sessionStorage.baseurl;
+    
+  $scope.singinRequest = signinRequest.getData();
 
-  $scope.close = function(){
+  $scope.$watch('singinRequest', function(newValue, oldValue){
+      if(newValue == true){
+          console.log("get request");
+          $scope.showRegister();
+          signinRequest.setData(false);
+      }
+  });
+    
+  $scope.showRegister = function(){
+      if(ifmodal)
+          $scope.closeModal();
+      if($cookieStore.get('id') === undefined || $cookieStore.get('id') === null)
+         formDisplay.hideAndShow(null, '#register');
+      else{
+          curr_path = "user/"+$cookieStore.get('name');
+          $location.path(curr_path);
+      }
+          
+          
+  }
+  $scope.hideRegister = function(event){
+      //console.log("hide register");
+      formDisplay.hideAndShow('#register', null);
+  }
+  $scope.showLogin = function(){
+      formDisplay.hideAndShow('#register', '#login');
+  }
+  $scope.hideLogin = function(){
+      //console.log("hide login");
+      formDisplay.hideAndShow('#login', null);
+  }
+  $scope.registerUser = function(){
+      //step1: get
+  }
+  
+  $scope.loginUser = function(){
+      console.log("loginUser");
+      $cookieStore.put('id','1234');
+      $cookieStore.put('name', 'Lisa');
+      $cookieStore.put('email', $scope.login_email);
+      console.log($cookieStore.get('email'));
+  }
+  
+  $scope.closeModal = function(){
       console.log("modal closed");
-        $(".modal1").css("display", "none"); 
+        //$(".modal1").css("display", "none"); 
+      $( ".modal1").slideUp( "slow", function() {
+            ifmodal = false;
+                // Animation complete.
+                //$(".modal1").css("display", "none");
+            });
   }
   $scope.modal = function(){
       console.log("modal clicked");
         $( ".modal1").slideDown( "slow", function() {
             // Animation complete.
-            
+            ifmodal = true;
         });
   }
   $scope.search = function(){
@@ -266,7 +341,7 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window' , function
   });
   
   $scope.close = function(){
-      //console.log("closed");
+      console.log("closed");
       $("#searchList").css("display", "none");
       $("#searchbar").animate({
             marginTop: "-100px"
@@ -306,7 +381,7 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window' , function
 });
 
 
-mp4Controllers.controller('galleryController', ['$scope', '$location', 'singerInfo', function($scope, $location, singerInfo) {
+mp4Controllers.controller('galleryController', ['$scope', '$location',  '$cookieStore', 'singerInfo', 'signinRequest',  function($scope, $location, $cookieStore, singerInfo, signinRequest) {
     $scope.singerList = [
         {
           "name": "rapper1",
@@ -383,9 +458,13 @@ mp4Controllers.controller('galleryController', ['$scope', '$location', 'singerIn
     $scope.displayDetails = function(curr){
         $scope.curr = curr;
     }
-    $scope.close = function(){
+    $scope.closeModal = function(){
       console.log("modal closed");
-        $(".modal1").css("display", "none"); 
+        //$(".modal1").css("display", "none"); 
+        $( ".modal1").slideUp( "slow", function() {
+                // Animation complete.
+                //$(".modal1").css("display", "none");
+            });
       }
     $scope.modal = function(){
           console.log("modal clicked");
@@ -400,15 +479,30 @@ mp4Controllers.controller('galleryController', ['$scope', '$location', 'singerIn
         var curr_path = "singer/" + curr.id;
         $location.path(curr_path);
     }
+    $scope.toAccount = function(){
+        id = $cookieStore.get('id');
+        if(id == undefined){
+            signinRequest.setData(true, function(){
+                $location.path("/settings");
+            });
+        }else{
+            curr_path = "user/"+$cookieStore.get('name');
+            $location.path(curr_path);
+        }
+    }
 
 }]);
 
-mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo', 'singerName', '$location', function($scope, singerInfo, songInfo,singerName, $location) {
+mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo', 'singerName', '$location', '$cookieStore', 'signinRequest', function($scope, singerInfo, songInfo,singerName, $location, $cookieStore, signinRequest) {
     $scope.singer = singerInfo.getData();
     $scope.singerId = $scope.singer.id || "1";
-    $scope.close = function(){
+     $scope.closeModal = function(){
       console.log("modal closed");
-        $(".modal1").css("display", "none"); 
+        //$(".modal1").css("display", "none"); 
+        $( ".modal1").slideUp( "slow", function() {
+                // Animation complete.
+                //$(".modal1").css("display", "none");
+            });
       }
     $scope.modal = function(){
           console.log("modal clicked");
@@ -417,6 +511,18 @@ mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo
 
             });
       }
+    $scope.toAccount = function(){
+        id = $cookieStore.get('id');
+        if(id == undefined){
+            signinRequest.setData(true, function(){
+                $location.path("/settings");
+            });
+        }else{
+            curr_path = "user/"+$cookieStore.get('name');
+            $location.path(curr_path);
+        }
+    }
+    //lyrics, title, artistId
     $scope.songsOfSinger = [
         {
             "id": "1",
@@ -581,13 +687,17 @@ mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo
 }]);
 
 
-mp4Controllers.controller('songController', ['$scope', '$http', 'singerName', 'songInfo', '$window' , function($scope, $http, singerName,  songInfo, $window) {
+mp4Controllers.controller('songController', ['$scope', '$http', 'singerName', 'songInfo', '$window', '$cookieStore', '$location', 'signinRequest', function($scope, $http, singerName,  songInfo, $window, $cookieStore, $location, signinRequest) {
     console.log("get here1");
     $scope.song = songInfo.getData();
     $scope.singerName = singerName.getData();
-    $scope.close = function(){
+     $scope.closeModal = function(){
       console.log("modal closed");
-        $(".modal1").css("display", "none"); 
+        //$(".modal1").css("display", "none"); 
+        $( ".modal1").slideUp( "slow", function() {
+                // Animation complete.
+                //$(".modal1").css("display", "none");
+            });
       }
     $scope.modal = function(){
           console.log("modal clicked");
@@ -596,6 +706,17 @@ mp4Controllers.controller('songController', ['$scope', '$http', 'singerName', 's
 
             });
       }
+    $scope.toAccount = function(){
+        id = $cookieStore.get('id');
+        if(id == undefined){
+            signinRequest.setData(true, function(){
+                $location.path("/settings");
+            });
+        }else{
+            curr_path = "user/"+$cookieStore.get('name');
+            $location.path(curr_path);
+        }
+    }
     $scope.escapeModal = function(){
         console.log("escapeModal");
         $(".modal2").css("display", "none");
@@ -622,11 +743,24 @@ mp4Controllers.controller('songController', ['$scope', '$http', 'singerName', 's
 
 }]);
 
-mp4Controllers.controller('userController', ['$scope', '$http','$location', 'singerInfo', function($scope, $http, $location, singerInfo){
+mp4Controllers.controller('userController', ['$scope', '$http','$location', '$routeParams', '$cookieStore', 'singerInfo', function($scope, $http, $location, $routeParams, $cookieStore, singerInfo){
     
-    $scope.close = function(){
+    $scope.name = $routeParams.name || 'unknown';
+    
+    $scope.$watch('name', function(newValue, oldValue){
+      if(newValue == 'unknown' || newValue !== $cookieStore.get('name')){
+          alert("Sorry... It's not a valid name");
+          $location.path("/settings");
+      }
+  });
+    
+    $scope.closeModal = function(){
       console.log("modal closed");
-        $(".modal1").css("display", "none"); 
+        //$(".modal1").css("display", "none"); 
+        $( ".modal1").slideUp( "slow", function() {
+                // Animation complete.
+                //$(".modal1").css("display", "none");
+            });
       }
     $scope.modal = function(){
           console.log("modal clicked");
@@ -635,7 +769,24 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', 'sin
 
             });
       }
+    $scope.toAccount = function(){
+        id = $cookieStore.get('id');
+        if(id == undefined){
+            signinRequest.setData(true, function(){
+                $location.path("/settings");
+            });
+        }else{
+            $scope.closeModal();
+        }
+    }
+    $scope.logout = function(){
+        $cookieStore.remove('id');
+        $cookieStore.remove('email');
+        $cookieStore.remove('name');
+        $location.path("/settings");
+    }
     //faked user and insgers
+    //name, songIds, description
     $scope.singers = [
         {
           "name": "rapper1",
@@ -687,11 +838,12 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', 'sin
             
         }
     ];
+    //username, passwordHash, favSongIds, favArtistIds,aboutMe, thumbnailUrl
     $scope.user = {
       "id": "1",
       "name": "user1",
       "description": "1Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis.",
-      "avoriteSingers": "7",    
+      "favoriteSingers": "7",    
       "profile": "http://placehold.it/550x550"
     };
     $scope.toSingerPage = function(curr){
@@ -717,6 +869,8 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', 'sin
         }
     }
     
-}])
+    
+    
+}]);
 
 

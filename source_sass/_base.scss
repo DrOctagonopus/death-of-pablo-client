@@ -8,6 +8,53 @@ body{
     background-size: cover;
 }
 
+.ATagDefault{
+    color: white;
+}
+#register{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    top: 20%;
+    left: 0;
+    color: white;
+    #inner{
+        background-color: rgba(0,0,0,0.8);
+        border-radius: 5px;
+        .input{
+            float: left;
+        }
+        .icon{
+            margin-right: 5px;
+        }
+        .welcome{
+            font-weight: bold;
+            padding-top: 10px;
+            font-size: 1.2em;
+        }
+    }
+}
+#login{
+    display: none;
+    z-index: 10;
+    top: 20%;
+    position: fixed;
+    left: 5%;
+    width: 100%;
+    height: 100%;
+    #inner{
+        background-color: rgba(0,0,0,0.8);
+        color: white;
+        padding: 1rem;
+        border-radius: 3px;
+    }
+    label{
+        color: white;
+    }
+}
+
 #searchbar{
     background-color: black;
     //color: white;
