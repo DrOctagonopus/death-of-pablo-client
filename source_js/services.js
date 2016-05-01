@@ -74,7 +74,7 @@ mp4Services.factory('UserService', function($http, $window){
     };
 });
 
-my4Services.factory('artists', function($http, $window) {
+mp4Services.factory('artists', function($http, $window) {
     return{
         get: function(){
             return $http.get('/api/artists');
@@ -85,7 +85,7 @@ my4Services.factory('artists', function($http, $window) {
     };
 });
 
-my4Service.factory('songs', function($http, $window){
+mp4Services.factory('songs', function($http, $window){
     return{
         get: function(){
             return $http.get('/api/songs');
@@ -96,7 +96,7 @@ my4Service.factory('songs', function($http, $window){
     };
 });
 
-my4Service.factory('user', function($http, $window){
+mp4Services.factory('user', function($http, $window){
     return{
         getOneById: function(id){
             return $http.get('/api/user'+id);
