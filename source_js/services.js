@@ -1,5 +1,6 @@
 var mp4Services = angular.module('mp4Services', []);
 
+//for front-end
 mp4Services.factory('formDisplay', function(){
     return{
         hideAndShow: function(formHide, formShow){
@@ -11,7 +12,6 @@ mp4Services.factory('formDisplay', function(){
         }
     }
 });
-
 mp4Services.factory('singerName', function(){
     var name = "";
     return{
@@ -23,8 +23,6 @@ mp4Services.factory('singerName', function(){
         }
     }
 });
-
-
 mp4Services.factory('singerInfo', function(){
     var singer = "";
     return{
@@ -36,7 +34,6 @@ mp4Services.factory('singerInfo', function(){
         }
     }
 });
-
 mp4Services.factory('songInfo', function(){
     var song = "";
     return{
@@ -48,8 +45,6 @@ mp4Services.factory('songInfo', function(){
         }
     }
 });
-
-<<<<<<< HEAD
 mp4Services.factory('signinRequest', function(){
     var signinRequest = false;
     return{
@@ -63,10 +58,10 @@ mp4Services.factory('signinRequest', function(){
     }
 });
 
-mp4Services.factory('Llamas', function($http, $window) {
-=======
+
+//for communicate with backend
+
 mp4Services.factory('UserService', ['$http', '$window', function($http, $window){
->>>>>>> bab238b1049e3af16bf5443760398648a3b941e3
     return {
         post : function(req, callback, err) {
             return $http.post("/user/", req).
@@ -77,4 +72,72 @@ mp4Services.factory('UserService', ['$http', '$window', function($http, $window)
             });
         }
     };
-}])
+}]);
+
+my4Services.factory('artists', function($http, $window) {
+    return{
+        get: function(){
+            return $http.get('/api/artists');
+        },
+        getOne: function(){
+            return $http.get('/api/artists'+id);
+        }
+    };
+});
+
+my4Service.factory('songs', function($http, $window){
+    return{
+        get: function(){
+            return $http.get('/api/songs');
+        },
+        getOne: function(id){
+            return $http.get('/api/songs'+id);
+        }
+    };
+});
+
+my4Service.factory('user', function($http, $window){
+    return{
+        getOneById: function(id){
+            return $http.get('/api/user'+id);
+        }
+    };
+});
+
+
+
+    
+   /* mp4Services.factory('Llamas', function($http, $window) {
+    return {
+        get : function() {
+            var baseUrl = $window.sessionStorage.baseurl;
+            return $http.get(baseUrl+'/api/users');
+        },
+        getOneUser: function(id){
+            var baseUrl = $window.sessionStorage.baseurl;
+            return $http.get(baseUrl+'/api/users/'+id);
+        },
+        postNewUser: function(myname, myemail){
+            var baseUrl = $window.sessionStorage.baseurl;
+            return $http.post(baseUrl+'/api/users', {
+                name: myname,
+                email: myemail
+            });
+        },
+        deleteUser: function(id){
+            var baseUrl = $window.sessionStorage.baseurl;
+            return $http.delete(baseUrl+'/api/users/'+id);
+        },
+         modifyTask: function(id, email, name, dateCreated, pendingTasks){
+             var baseUrl = $window.sessionStorage.baseurl;
+             var curr = baseUrl+'/api/users/'+id;
+             return $http.put(curr, {
+                name: name,
+                email: email,
+                dateCreated: dateCreated,
+                pendingTasks: pendingTasks
+            });
+        }
+        
+    }
+});*/
