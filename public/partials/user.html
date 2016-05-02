@@ -39,29 +39,32 @@
 <h3><a href="#">My Favorite Singers</a></h3>
 <div class="row small-up-2 medium-up-3 large-up-4">
     <div class="column" ng-repeat="singer in singers" ng-click="toSingerPage(singer)">
-        <img class="thumbnail" src="{{singer.photo}}">
+        <img class="thumbnail" src="http://placehold.it/550x550">
         <h5>{{singer.name}}</h5>
     </div>       
 </div>
+    
+<br />
+
 
 
 
 </div>
  
- 
+ //username, passwordHash, favSongIds, favArtistIds, aboutMe, thumbnailUrl
 <aside class="large-3 columns" style="">
 <h5>My Info</h5>
     <div class="side-nav">
-        <img class="thumbnail" src="{{user.profile}}" style="width: 200px;">
+        <img class="thumbnail" src="{{user.thumbnailUrl}}" style="width: 200px;">
         <br />
-        <p>User Name: {{user.name}}</p>
+        <p>User Name: {{user.username}}</p>
         <p>Total Favorite Singers: {{user.favoriteSingers}} </p>
         <button class="button" ng-click="logout()">Log Out</button>
         <button class="button">Delete Account</button>
     </div>
 <div class="panel">
     <h5>About Me</h5>
-    <p>{{user.description}}</p>
+    <p>{{user.aboutMe}}</p>
     <a href="" ng-click="modifyDescription()">Edit it &rarr;</a>
     </div>
 </aside>

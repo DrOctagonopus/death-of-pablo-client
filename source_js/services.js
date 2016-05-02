@@ -85,11 +85,11 @@ mp4Services.factory('allSongs', function(){
     }
 });
 
+
 //for communicate with backend
 
 
 //name, songIds, description
-
 mp4Services.factory('artists', function($http, $window) {
     return{
         get: function(){
@@ -145,10 +145,22 @@ mp4Services.factory('user', function($http, $window){
         getOneById: function(id){
             return $http.get(baseUrl+'/api/user'+id);
         },
-        postNewUser: function(name, password){
+        register: function(name, password, thumbnailUrl){
+            return $http.post(baseUrl+'/api/user',{
+                username: name,
+                passwordHash: password,
+                thumbnailUrl: thumbnailUrl
+            });
+        },
+        login: function(name, password){
             return $http.post(baseUrl+'/api/user',{
                 username: name,
                 passwordHash: password
+            });
+        },
+        updateAboutme: function(aboutMe){
+            return $http.post(baseUrl+'/api/user',{
+                aboutMe: aboutMe
             });
         }
     };
