@@ -689,6 +689,27 @@ mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo
 
 mp4Controllers.controller('songController', ['$scope', '$http', 'singerName', 'songInfo', '$window', '$cookieStore', '$location', 'signinRequest', function($scope, $http, singerName,  songInfo, $window, $cookieStore, $location, signinRequest) {
     console.log("get here1");
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3]
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    console.log(myChart);
     $scope.song = songInfo.getData();
     $scope.singerName = singerName.getData();
      $scope.closeModal = function(){

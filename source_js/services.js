@@ -58,22 +58,6 @@ mp4Services.factory('signinRequest', function(){
     }
 });
 
-
-//for communicate with backend
-
-mp4Services.factory('UserService', function($http, $window){
-    return {
-        post : function(req, callback, err) {
-            return $http.post("/user/", req).
-            then(function(resp) {
-                callback(resp.data);
-            }, function(resp) {
-                err(resp.data);
-            });
-        }
-    };
-});
-
 mp4Services.factory('artists', function($http, $window) {
     return{
         get: function(){
