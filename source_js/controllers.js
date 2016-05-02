@@ -391,6 +391,27 @@ mp4Controllers.controller('songController', ['$scope', '$http', 'artistsOfSong',
       });
   }
     console.log("get here1");
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3]
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    console.log(myChart);
     $scope.song = songInfo.getData();
     console.log($scope.song);
     $scope.singers = artistsOfSong.getData();

@@ -59,6 +59,7 @@ mp4Services.factory('signinRequest', function(){
         }
     }
 });
+
 mp4Services.factory('allArtists', function(){
     var artists = "";
     return{
@@ -88,6 +89,7 @@ mp4Services.factory('allSongs', function(){
 
 
 //name, songIds, description
+
 mp4Services.factory('artists', function($http, $window) {
     return{
         get: function(){
@@ -110,7 +112,9 @@ mp4Services.factory('artists', function($http, $window) {
     };
 });
 
+
 //title, lyrics, artistIds, rank, score, rapDensity, rhymesPerVerse, vocabLevel
+
 mp4Services.factory('songs', function($http, $window){
     return{
         get: function(){
@@ -133,7 +137,9 @@ mp4Services.factory('songs', function($http, $window){
     };
 });
 
+
 //username, passwordHash, favSongIds, favArtistIds, aboutMe, thumbnailUrl
+
 mp4Services.factory('user', function($http, $window){
     return{
         getOneById: function(id){
