@@ -24,10 +24,20 @@ mp4Controllers.directive('clickAnywhereButHere', function($document, $parse) {
     }
 });
 
-mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$location', '$cookieStore', 'formDisplay', 'signinRequest', function($scope, $window, $location, $cookieStore, formDisplay, signinRequest) {
-    var ifmodal = false; //click account in modal
+mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$location', '$cookieStore', 'formDisplay', 'signinRequest', 'artists', 'songs', 'allArtists', 'allSongs', 'singerInfo', 'songInfo', function($scope, $window, $location, $cookieStore, formDisplay, signinRequest, artists, songs, allArtists, allSongs, singerInfo, songInfo) {
+  var ifmodal = false; //click account in modal
   $scope.url = $window.sessionStorage.baseurl;
-    
+    $scope.songs = [];
+    $scope.rappers = [];
+  $scope.toGallery = function(){
+      artists.get().success(function(data){ 
+          allArtists.setData(data['data'], function(){
+              //console.log("finish setting allArtists");
+              //console.log(allArtists.getData());
+              $location.path("/gallery");
+          });
+      });
+  }
   $scope.singinRequest = signinRequest.getData();
 
   $scope.$watch('singinRequest', function(newValue, oldValue){
@@ -89,212 +99,12 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
             ifmodal = true;
         });
   }
-  $scope.search = function(){
-      
-  }
   
-  $scope.songs = [
-        {
-            "id": "1",
-            "singerId": "1",
-            "name": "song1",
-            "details": "1Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2011,
-            "rank": 1,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "2",
-            "singerId": "3",
-            "name": "song2",
-            "details": "2Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2012,
-            "rank": 2,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "3",
-            "singerId": "2",
-            "name": "song3",
-            "details": "3Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2009,
-            "rank": 3,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "4",
-            "singerId": "4",
-            "name": "song4",
-            "details": "4Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2008,
-            "rank": 4,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "5",
-            "singerId": "5",
-            "name": "song5",
-            "details": "5Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2007,
-            "rank": 5,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "6",
-            "singerId": "6",
-            "name": "song6",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2011,
-            "rank": 6,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "7",
-            "singerId": "1",
-            "name": "song7",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 1995,
-            "rank": 7,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "8",
-            "singerId": "2",
-            "name": "song8",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2009,
-            "rank": 8,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "9",
-            "singerId": "5",
-            "name": "song9",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2011,
-            "rank": 9,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "10",
-            "singerId": "9",
-            "name": "song6",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2011,
-            "rank": 6,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "11",
-            "singerId": "8",
-            "name": "song7",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 1995,
-            "rank": 7,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "12",
-            "singerId": "5",
-            "name": "song8",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2009,
-            "rank": 8,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "13",
-            "singerId": "2",
-            "name": "song9",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2011,
-            "rank": 9,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "14",
-            "singerId": "9",
-            "name": "song10",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2011,
-            "rank": 10,
-            "cover": "http://placehold.it/550x550"
-        } 
-    ];
+  
+ 
 
   $scope.ifrapper = true; 
-  $scope.rappers = [
-        {
-          "name": "rapper1",
-            "id": 1,
-            "description": "1Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper2",
-            "id": 2,
-            "description": "2Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper3",
-            "id": 3,
-            "description": "3Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper4",
-            "id": 4,
-            "description": "4Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper5",
-            "id": 5,
-            "description": "5Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper6",
-            "id": 6,
-            "description": "6Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper7",
-            "id": 7,
-            "description": "7Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper8",
-            "id": 8,
-            "description": "8Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper9",
-            "id": 9,
-            "description": "9Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper10",
-            "id": 10,
-            "description": "10Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        }
-    ];
+ 
    
 
   
@@ -320,10 +130,32 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
       $(".rapperItem").css("display", "none");
   }
   
+  $scope.toSongPage = function(curr){
+        songInfo.setData(curr);
+        var singerIds = curr['artistIds'];
+        console.log(singerIds);
+        artists.getArtistsIn(singerIds).success(function(data){
+            console.log(data);
+            artistsOfSong.setData(data['data'], function(){
+                console.log(artistsOfSong.getData());
+                var curr_path = "song/" + curr['_id'];
+                $location.path(curr_path);
+            });
+            
+        });
+        
+    }
+  $scope.toSingerPage = function(curr){
+        singerInfo.setData(curr, function(){
+            console.log(singerInfo.getData());
+            var curr_path = "singer/" + curr['_id'];
+            $location.path(curr_path);
+        });   
+        
+    }
+  
   
   $scope.$watch('searchTerm', function displayList(newValue, oldValue){
-     // console.log("get here");
-     // console.log($scope.searchTerm);
       
       if($scope.searchTerm != "" && $scope.searchTerm != null && $scope.searchTerm != undefined ){
           console.log("there is text");
@@ -352,11 +184,22 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
       $("#searchbar").animate({
           marginTop: "0px"
       });
+      artists.get().success(function(data){ 
+          $scope.rappers= data['data'];
+          console.log($scope.rappers);
+      });
+      songs.get().success(function(data){
+         $scope.songs = data['data'];
+          console.log($scope.songs);
+      });
   }
+
 
 }])
 .filter('subText', function(){
     return function(text, phrase){
+        console.log('subText');
+        console.log(text);
         var match = new RegExp('('+phrase+')', 'gi');
         if(match){
             console.log("match found at "+match.index);
@@ -366,8 +209,9 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
 })
 .filter('highlight', function($sce) {
     return function(text, phrase) {
+        //console.log("hightli")
       console.log(phrase);
-        //console.log(text);
+        console.log(text);
       if (phrase){
           text = text.replace(new RegExp('('+phrase+')', 'gi'), '<span style="color: yellow">$1</span>');
           //console.log(new RegExp('('+phrase+')', 'gi').exec(text)); 
@@ -381,79 +225,18 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
 });
 
 
-mp4Controllers.controller('galleryController', ['$scope', '$location',  '$cookieStore', 'singerInfo', 'signinRequest',  function($scope, $location, $cookieStore, singerInfo, signinRequest) {
-    $scope.singerList = [
-        {
-          "name": "rapper1",
-            "id": 1,
-            "description": "1Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper2",
-            "id": 2,
-            "description": "2Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper3",
-            "id": 3,
-            "description": "3Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper4",
-            "id": 4,
-            "description": "4Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper5",
-            "id": 5,
-            "description": "5Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper6",
-            "id": 6,
-            "description": "6Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper7",
-            "id": 7,
-            "description": "7Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper8",
-            "id": 8,
-            "description": "8Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper9",
-            "id": 9,
-            "description": "9Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper10",
-            "id": 10,
-            "description": "10Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        }
-    ];
+mp4Controllers.controller('galleryController', ['$scope', '$location',  '$cookieStore', 'singerInfo', 'signinRequest', 'allArtists', 'artists', function($scope, $location, $cookieStore, singerInfo, signinRequest, allArtists, artists) {
+    $scope.toGallery = function(){
+      artists.get().success(function(data){ 
+          allArtists.setData(data['data'], function(){
+              //console.log("finish setting allArtists");
+              //console.log(allArtists.getData());
+              $location.path("/gallery");
+          });
+      });
+  }
+    $scope.singerList = allArtists.getData();
+    console.log(allArtists.getData());
     $scope.curr = $scope.singerList[1];
     $scope.displayDetails = function(curr){
         $scope.curr = curr;
@@ -474,10 +257,14 @@ mp4Controllers.controller('galleryController', ['$scope', '$location',  '$cookie
             });
       }
     $scope.toSingerPage = function(curr){
-        singerInfo.setData(curr);
-        console.log(singerInfo.getData());
-        var curr_path = "singer/" + curr.id;
-        $location.path(curr_path);
+        singerInfo.setData(curr, function(){
+            console.log(singerInfo.getData());
+            var curr_path = "singer/" + curr['_id'];
+            $location.path(curr_path);
+        });
+        
+        
+        
     }
     $scope.toAccount = function(){
         id = $cookieStore.get('id');
@@ -493,9 +280,21 @@ mp4Controllers.controller('galleryController', ['$scope', '$location',  '$cookie
 
 }]);
 
-mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo', 'singerName', '$location', '$cookieStore', 'signinRequest', function($scope, singerInfo, songInfo,singerName, $location, $cookieStore, signinRequest) {
+mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo', 'artistsOfSong', '$location', '$cookieStore', 'signinRequest', 'songs', 'artists', 'allArtists', function($scope, singerInfo, songInfo,artistsOfSong, $location, $cookieStore, signinRequest, songs, artists, allArtists) {
+    $scope.toGallery = function(){
+      artists.get().success(function(data){ 
+          allArtists.setData(data['data'], function(){
+              //console.log("finish setting allArtists");
+              //console.log(allArtists.getData());
+              $location.path("/gallery");
+          });
+      });
+  }
     $scope.singer = singerInfo.getData();
-    $scope.singerId = $scope.singer.id || "1";
+    console.log("in singer page");
+    console.log($scope.singer);
+    $scope.singerId = $scope.singer['_id'] || "1";
+    $scope.getSongsOfSinger = [];
      $scope.closeModal = function(){
       console.log("modal closed");
         //$(".modal1").css("display", "none"); 
@@ -522,142 +321,41 @@ mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo
             $location.path(curr_path);
         }
     }
-    //lyrics, title, artistId
-    $scope.songsOfSinger = [
-        {
-            "id": "1",
-            "singerId": "1",
-            "name": "song1",
-            "details": "1Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2011,
-            "rank": 1,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "2",
-            "singerId": "1",
-            "name": "song2",
-            "details": "2Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2012,
-            "rank": 2,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "3",
-            "singerId": "1",
-            "name": "song3",
-            "details": "3Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2009,
-            "rank": 3,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "4",
-            "singerId": "1",
-            "name": "song4",
-            "details": "4Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2008,
-            "rank": 4,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "5",
-            "singerId": "1",
-            "name": "song5",
-            "details": "5Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2007,
-            "rank": 5,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "6",
-            "singerId": "1",
-            "name": "song6",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2011,
-            "rank": 6,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "7",
-            "singerId": "1",
-            "name": "song7",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 1995,
-            "rank": 7,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "8",
-            "singerId": "1",
-            "name": "song8",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2009,
-            "rank": 8,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "9",
-            "singerId": "1",
-            "name": "song9",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2011,
-            "rank": 9,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "10",
-            "singerId": "1",
-            "name": "song6",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2011,
-            "rank": 6,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "11",
-            "singerId": "1",
-            "name": "song7",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 1995,
-            "rank": 7,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "12",
-            "singerId": "1",
-            "name": "song8",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2009,
-            "rank": 8,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "13",
-            "singerId": "1",
-            "name": "song9",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2011,
-            "rank": 9,
-            "cover": "http://placehold.it/550x550"
-        },
-        {
-            "id": "14",
-            "singerId": "1",
-            "name": "song10",
-            "details": "6Fusce non velit pretium, eleifend dolor at, faucibus ipsum. Fusce id ultrices urna, faucibus laoreet nunc. Phasellus id dui luctus mauris rhoncus maximus. Aliquam lacinia lacus efficitur tincidunt placerat. Mauris hendrerit leo at magna faucibus, quis commodo velit condimentum.",
-            "year": 2011,
-            "rank": 10,
-            "cover": "http://placehold.it/550x550"
-        } 
-    ];
+    
+    $scope.getSongsOfSinger = function(){
+        var songsIds = $scope.singer['songIds'];
+
+        songs.getSongsIn(songsIds).success(function(data){
+            console.log("get Songs Of Singer");
+            console.log(data);
+            $scope.songsOfSinger = data['data'];
+            if($scope.songsOfSinger.length <=6){
+                $scope.loadedSongs =$scope.songsOfSinger;
+                $scope.currLoadedLength  = $scope.songsOfSinger.length;
+            }else{
+                $scope.currLoadedLength  = 6;
+                $scope.loadedSongs = $scope.songsOfSinger.slice(0,5);
+            }
+        });
+    }
+    $scope.getSongsOfSinger();
+
     $scope.currLoadedLength = 0;
+   
     $scope.toSongPage = function(curr){
         songInfo.setData(curr);
-        singerName.setData($scope.singer.name);
-        console.log(songInfo.getData());
-        var curr_path = "song/" + curr.id;
-        $location.path(curr_path);
+        var singerIds = curr['artistIds'];
+        console.log(singerIds);
+        artists.getArtistsIn(singerIds).success(function(data){
+            console.log(data);
+            artistsOfSong.setData(data['data'], function(){
+                console.log(artistsOfSong.getData());
+                var curr_path = "song/" + curr['_id'];
+                $location.path(curr_path);
+            });
+            
+        });
+        
     }
     $scope.loadMoreSongs = function(){
         console.log("loadMoreSong");
@@ -676,21 +374,38 @@ mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo
             $("#more").css("display", "none");
         }
     }
-    if($scope.songsOfSinger.length <=6){
-        $scope.loadedSongs =$scope.songsOfSinger;
-        $scope.currLoadedLength  = $scope.songsOfSinger.length;
-    }else{
-        $scope.currLoadedLength  = 6;
-        $scope.loadedSongs = $scope.songsOfSinger.slice(0,5);
-    }
+    
 
 }]);
 
 
-mp4Controllers.controller('songController', ['$scope', '$http', 'singerName', 'songInfo', '$window', '$cookieStore', '$location', 'signinRequest', function($scope, $http, singerName,  songInfo, $window, $cookieStore, $location, signinRequest) {
+mp4Controllers.controller('songController', ['$scope', '$http', 'artistsOfSong', 'songInfo', '$window', '$cookieStore', '$location', 'signinRequest', 'allArtists', 'artists', function($scope, $http, artistsOfSong,  songInfo, $window, $cookieStore, $location, signinRequest, allArtists, artists) {
+    
+    $scope.toGallery = function(){
+      artists.get().success(function(data){ 
+          allArtists.setData(data['data'], function(){
+              //console.log("finish setting allArtists");
+              //console.log(allArtists.getData());
+              $location.path("/gallery");
+          });
+      });
+  }
     console.log("get here1");
     $scope.song = songInfo.getData();
-    $scope.singerName = singerName.getData();
+    console.log($scope.song);
+    $scope.singers = artistsOfSong.getData();
+    //$scope.singerNames = "";
+    /*$scope.getSingerNames = function(){
+        var data = artistsOfSong.getData();
+        if(data !== undefined){
+            for(var i=0; i<data.length; i++){
+                $scope.singerNames = $scope.singerNames + ", "+data[i]['name'];
+            }
+        }
+    }*/
+    //$scope.getSingerNames();
+    //console.log($scope.singerNames);
+    
      $scope.closeModal = function(){
       console.log("modal closed");
         //$(".modal1").css("display", "none"); 
@@ -743,8 +458,16 @@ mp4Controllers.controller('songController', ['$scope', '$http', 'singerName', 's
 
 }]);
 
-mp4Controllers.controller('userController', ['$scope', '$http','$location', '$routeParams', '$cookieStore', 'singerInfo', function($scope, $http, $location, $routeParams, $cookieStore, singerInfo){
-    
+mp4Controllers.controller('userController', ['$scope', '$http','$location', '$routeParams', '$cookieStore', 'singerInfo', 'artists', 'allArtists', function($scope, $http, $location, $routeParams, $cookieStore, singerInfo, artists, allArtists){
+   $scope.toGallery = function(){
+      artists.get().success(function(data){ 
+          allArtists.setData(data['data'], function(){
+              //console.log("finish setting allArtists");
+              //console.log(allArtists.getData());
+              $location.path("/gallery");
+          });
+      });
+  }
     $scope.name = $routeParams.name || 'unknown';
     
     $scope.$watch('name', function(newValue, oldValue){

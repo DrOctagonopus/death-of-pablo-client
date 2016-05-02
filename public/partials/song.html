@@ -3,7 +3,7 @@
             <span ng-click="closeModal()" class="close">X</span>
             <ul id="menu">
                 <li style="cursor:pointer" class="menu-text"><a class="ATagDefault" href="#/settings">Main</a></li>
-                <li style="cursor:pointer" class="menu-text" ><a class="ATagDefault" href="#/gallery">Gallery</a></li>
+                <li style="cursor:pointer" class="menu-text" ><a class="ATagDefault" ng-click="toGallery()">Gallery</a></li>
                 <li style="cursor:pointer" class="menu-text" ng-click="toAccount()">Account</li>
                 <li style="cursor:pointer" class="menu-text">Contact</li>
             </ul>
@@ -19,18 +19,22 @@
                 <span class="navClosed">MORE</span>
               </a>
               <div id="moreInfo">
-                  <h5>Song Name: {{song.name}}</h5>
+                  <h5>Song Name: <br /> {{song.title}}</h5>
+                  <br />
                   <img src="{{song.cover}}" />
-                  <p>Rapper: {{singerName}}</p>
-                  <p>Issue Date: {{song.year}}</p>
-                  <div style="overflow: scroll;">Description:{{song.details}}</div>
+                  <div ng-repeat="singer in singers">
+                      <div>Artists: {{singer.name}}</div>
+                      <div style="overflow: scroll;">Description:<br /> {{singer.description}}</div>
+                      <br />
+                  </div>
+                  
               </div>
             </nav>
     
             <div class="row">
                 <div class="small-11 columns text-center">
                     <div class="panel">
-                        <h1 id="head">{{song.name}}</h1>
+                        <h1 id="head">{{song.title}}</h1>
                     </div>
                 </div>
                 <div id="icon4" class="small-1">
@@ -63,137 +67,14 @@
 
                     <div id="lyrics" class="large-11 columns">
                         <div>
-            [Kanye]
-                    We don’t want no devils in the house...<br />
-                    Yes, darling<br />
-                    We don’t want no devils in the house...<br />
-                    Yes, darling<br />
-                    We want the lord, he’s sick<br />
-                    My [?] hand over [?]<br />
-                    Jesus Christ have mercy<br />
-                    Yes darling<br />
-                    Hallelujah<br />
-                    We don’t want no devils in the house<br />
-                    Yes, darling<br />
-                    We don’t want no devils in the house<br />
-                    Yes, darling<br />
-                    We want the lord, he’s sick<br />
-                    My [?] hand over [?]<br />
-                    Jesus Christ have mercy<br />
-                    Yes darling<br />
-                    Hallelujah<br />
+                            {{song.lyrics}}
 
-                    I'm tryna <span id="red">keep my faith</span><br />
-                    On an ultra light beam<br />
-                    We on an ultra light beam<br />
-                    This is a God dream<br />
-                    This is a God dream<br />
-                    This is everything<br />
-                    This is everything<br />
-                    Deliver us serenity<br />
-                    Deliver us peace<br />
-                    Deliver us loving<br />
-                    We know we need<br />
-                    You know we need it<br />
-                    You know we need it<br />
-                    And I'mma need you now, oh, I<br />
-                    Pray for Paris<br />
-                    Pray for the parents<br />
-                    This is a God dream<br />
-                    This is a God dream<br />
-                    This is a God dream<br />
-                    We on an ultra light beam<br />
-                    We on an ultra light beam<br />
-                            This is a <span id="red">God dream</span><br />
-                    This is God dream<br />
-                    This is everything<br />
-                    This is everything<br />
-                    Deliver us serenity<br />
-                    Deliver us peace<br />
-                    Deliver us loving<br />
-                    We know we need<br />
-                    You know we need it<br />
-                    You know we need it<br />
-                    And I'mma need you now<br />
-                    Pray for Paris<br />
-                    Pray for the parents<br />
-
-                    I'm tryna keep my faith<br />
-                    But I’m looking for more<br />
-                    Somewhere I can feel safe<br />
-                    And end my holy war<br />
-                    I'm tryna keep my faith<br />
-
-                    [Kelly Price]
-                            So why send <span id="red">depression</span> not blessings?<br />
-                    Why, oh why'd you do me wrong? (more)<br />
-                    You persecute the weak
-                    Because it makes you feel so strong<br />
-                    (To save) Don’t have much strength to fight<br />
-                    So I look to the light<br />
-                    (Lord) To make these wrongs turn right<br />
-                    Head up high, I look to the light<br />
-                    Hey, cause I know that you'll make everything alright<br />
-                            And I know that you'll take <span id="red">good care</span> of your child<br />
-                    Oh, no longer am afraid of the night<br />
-                    Cause I, I look to the light<br />
-
-                    [Chance The Rapper]
-                    We on an ultra <span id="red">light beam</span><br />
-                    We on an ultra light beam<br />
-                    This is a God dream<br />
-                    This is a God dream<br />
-                    This is everything<br />
-                    This is everything<br />
-                    Deliver us serenity<br />
-                    Deliver us peace<br />
-                    Deliver <span id="red">us loving</span> <br />
-                    We know we need<br />
-                    You know we need it<br />
-                    You know we need it<br />
-                    And I'mma need you now, oh, I<br />
-                    Pray for Paris<br />
-                    Pray for the parents<br />
-                    This is a God dream<br />
-                    This is a God dream<br />
-                    This is a God dream<br />
-                    We on an ultra light beam<br />
-                    We on an ultra light beam<br />
-                    This is a God dream<br />
-                    This is God dream<br />
-                    This is everything<br />
-                    This is everything<br />
-                    Deliver us serenity<br />
-                    Deliver us <span id="red">peace</span><br />
-                    Deliver us loving<br />
-                    We know we need<br />
-                    You know we need it<br />
-                    You know we need it<br />
-                    And I'mma <span id="red">need you now</span><br />
-                    Pray for Paris<br />
-                    Pray for the parents<br />
-
-                    (Yes darling...Hallelujah)<br />
-                    I'm tryna keep my faith<br />
-                    But I’m looking<span id="red"> for more</span><br />
-                    Somewhere I can feel safe<br />
-                    And end my holy war<br />
-                    I'm tryna keep my faith<br />
-
-                    Father this prayer is for everyone that feels they’re not good enough<br />
-                    This prayer’s for everybody that <span id="red">feels like</span> they’re too messed up<br />
-                    For everyone who feels they said they’ve said sorry too many times<br />
-                    You can never go too far when you can’t come back home again<br />
-                    That's why I need faith<br />
-
-                    (Lord, save, war)<br />
-
-        </div>
+                        </div>
 
                     </div>
                 </div>
             </div>
-                <aside class="large-3 columns hide-for-small">
+                <aside class="medium-3 small-12 columns">
                 More Statistics
                 <p><img src="http://placehold.it/300x440&text=[ad]"/></p>
                 <p><img src="http://placehold.it/300x440&text=[ad]"/></p>

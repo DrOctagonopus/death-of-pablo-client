@@ -414,6 +414,10 @@ body{
 #gallery{
         .off-canvas-content{
             background-color: white;
+            #listArea{
+                padding-top: 40px;
+                height: 100vh;
+            }
         }
         .off-canvas{
             background-color: transparent;

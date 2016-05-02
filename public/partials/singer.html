@@ -4,7 +4,7 @@
         <span ng-click="closeModal()" class="close">X</span>
         <ul id="menu">
             <li style="cursor:pointer" class="menu-text"><a class="ATagDefault" href="#/settings">Main</a></li>
-            <li style="cursor:pointer" class="menu-text" ><a class="ATagDefault" href="#/gallery">Gallery</a></li>
+            <li style="cursor:pointer" class="menu-text" ><a class="ATagDefault" ng-click="toGallery()">Gallery</a></li>
             <li style="cursor:pointer" class="menu-text" ng-click="toAccount()">Account</li>
             <li style="cursor:pointer" class="menu-text">Contact</li>
         </ul>
@@ -26,7 +26,7 @@
 <button class="button">More Artists</button>
 </div>
 <div class="show-for-large large-3 columns">
-<img src="{{singer.photo}}" alt="picture of space">
+<img src="http://placehold.it/550x550" alt="picture of space">
 </div>
 
 </div>
@@ -40,9 +40,9 @@
         <div class="column" ng-repeat="song in loadedSongs" ng-click="toSongPage(song)">
             <div class="callout">
                 <p>Rank: {{song.rank}}</p>
-                <p><img src="{{song.cover}}" alt="image of a planet called Pegasi B"></p>
-                <p class="lead">Name: {{song.name}}</p>
-                <p class="subheader">Year: {{song.year}}</p>
+                <p><img src="http://placehold.it/550x550" alt="image of a planet called Pegasi B"></p>
+                <p class="lead">Name: {{song.title}}</p>
+                <p class="subheader">Score: {{song.score}}</p>
             </div>
         </div>
     </div>

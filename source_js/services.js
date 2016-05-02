@@ -1,5 +1,5 @@
 var mp4Services = angular.module('mp4Services', []);
-
+var baseUrl = "http://localhost:4000";
 //for front-end
 mp4Services.factory('formDisplay', function(){
     return{
@@ -12,14 +12,15 @@ mp4Services.factory('formDisplay', function(){
         }
     }
 });
-mp4Services.factory('singerName', function(){
-    var name = "";
+mp4Services.factory('artistsOfSong', function(){
+    var artists = "";
     return{
         getData : function(){
-            return name;
+            return artists;
         },
-        setData : function(newData){
-            name = newData;
+        setData : function(newData, callback){
+            artists = newData;
+            callback();
         }
     }
 });
@@ -29,8 +30,9 @@ mp4Services.factory('singerInfo', function(){
         getData : function(){
             return singer;
         },
-        setData : function(newData){
+        setData : function(newData, callback){
             singer = newData;
+            callback();
         }
     }
 });
@@ -57,7 +59,30 @@ mp4Services.factory('signinRequest', function(){
         }
     }
 });
-
+mp4Services.factory('allArtists', function(){
+    var artists = "";
+    return{
+        getData : function(){
+            return artists;
+        },
+        setData : function(newData, callback){
+            artists = newData;
+            callback();
+        }
+    }
+});
+mp4Services.factory('allSongs', function(){
+    var songs = "";
+    return{
+        getData : function(){
+            return songs;
+        },
+        setData : function(newData, callback){
+            songs = newData;
+            callback();
+        }
+    }
+});
 
 //for communicate with backend
 
@@ -74,70 +99,66 @@ mp4Services.factory('UserService', ['$http', '$window', function($http, $window)
     };
 }]);
 
-my4Services.factory('artists', function($http, $window) {
+//name, songIds, description
+mp4Services.factory('artists', function($http, $window) {
     return{
         get: function(){
-            return $http.get('/api/artists');
-        },
-        getOne: function(){
-            return $http.get('/api/artists'+id);
-        }
-    };
-});
-
-my4Service.factory('songs', function($http, $window){
-    return{
-        get: function(){
-            return $http.get('/api/songs');
+            return $http.get(baseUrl+'/api/artists');
         },
         getOne: function(id){
-            return $http.get('/api/songs'+id);
+            return $http.get(baseUrl+'/api/artists'+id);
+        },
+        getArtistsIn: function(arrayOfIds){
+            //var curr = baseUrl+'/api/songs?where={"_id":{"$in":'+arrayOfIds+'}}';
+            //params: {_id: {$in: arrayofIds}}
+            var url = baseUrl +'/api/artists';
+            console.log(arrayOfIds);
+            return $http({
+                method: 'GET', 
+                url: url,
+                params: {_id: {$in: arrayOfIds}}
+            });
         }
     };
 });
 
-my4Service.factory('user', function($http, $window){
+//title, lyrics, artistIds, rank, score, rapDensity, rhymesPerVerse, vocabLevel
+mp4Services.factory('songs', function($http, $window){
+    return{
+        get: function(){
+            return $http.get(baseUrl+'/api/songs');
+        },
+        getOne: function(id){
+            return $http.get(baseUrl+'/api/songs'+id);
+        },
+        getSongsIn: function(arrayOfIds){
+            //var curr = baseUrl+'/api/songs?where={"_id":{"$in":'+arrayOfIds+'}}';
+            //params: {_id: {$in: arrayofIds}}
+            var url = baseUrl +'/api/songs';
+            console.log(arrayOfIds);
+            return $http({
+                method: 'GET', 
+                url: url,
+                params: {_id: {$in: arrayOfIds}}
+            });
+        }
+    };
+});
+
+//username, passwordHash, favSongIds, favArtistIds, aboutMe, thumbnailUrl
+mp4Services.factory('user', function($http, $window){
     return{
         getOneById: function(id){
-            return $http.get('/api/user'+id);
+            return $http.get(baseUrl+'/api/user'+id);
+        },
+        postNewUser: function(name, password){
+            return $http.post(baseUrl+'/api/user',{
+                username: name,
+                passwordHash: password
+            });
         }
     };
 });
 
 
 
-    
-   /* mp4Services.factory('Llamas', function($http, $window) {
-    return {
-        get : function() {
-            var baseUrl = $window.sessionStorage.baseurl;
-            return $http.get(baseUrl+'/api/users');
-        },
-        getOneUser: function(id){
-            var baseUrl = $window.sessionStorage.baseurl;
-            return $http.get(baseUrl+'/api/users/'+id);
-        },
-        postNewUser: function(myname, myemail){
-            var baseUrl = $window.sessionStorage.baseurl;
-            return $http.post(baseUrl+'/api/users', {
-                name: myname,
-                email: myemail
-            });
-        },
-        deleteUser: function(id){
-            var baseUrl = $window.sessionStorage.baseurl;
-            return $http.delete(baseUrl+'/api/users/'+id);
-        },
-         modifyTask: function(id, email, name, dateCreated, pendingTasks){
-             var baseUrl = $window.sessionStorage.baseurl;
-             var curr = baseUrl+'/api/users/'+id;
-             return $http.put(curr, {
-                name: name,
-                email: email,
-                dateCreated: dateCreated,
-                pendingTasks: pendingTasks
-            });
-        }
-        
-    }
-});*/
