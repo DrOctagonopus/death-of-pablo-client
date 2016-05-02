@@ -86,18 +86,6 @@ mp4Services.factory('allSongs', function(){
 
 //for communicate with backend
 
-mp4Services.factory('UserService', ['$http', '$window', function($http, $window){
-    return {
-        post : function(req, callback, err) {
-            return $http.post("/user/", req).
-            then(function(resp) {
-                callback(resp.data);
-            }, function(resp) {
-                err(resp.data);
-            });
-        }
-    };
-}]);
 
 //name, songIds, description
 mp4Services.factory('artists', function($http, $window) {
