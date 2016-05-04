@@ -85,11 +85,14 @@ mp4Services.factory('allSongs', function(){
     }
 });
 
+<<<<<<< HEAD
 
 //for communicate with backend
 
 
 //name, songIds, description
+=======
+>>>>>>> 5d3a5d34bec8747a21329e13ab73b81af68dc780
 mp4Services.factory('artists', function($http, $window) {
     return{
         get: function(){

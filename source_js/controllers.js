@@ -411,7 +411,9 @@ mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo
         }
     }
     
-
+    $scope.addAsFavorite = function() {
+        console.log('favorite artist');
+    }
 }]);
 
 
