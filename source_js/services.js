@@ -138,7 +138,7 @@ mp4Services.factory('songs', function($http, $window){
 });
 
 
-//username, passwordHash, favSongIds, favArtistIds, aboutMe, thumbnailUrl
+//username, password, favSongIds, favArtistIds, aboutMe, thumbnailUrl
 
 mp4Services.factory('user', function($http, $window){
     return{
@@ -146,16 +146,20 @@ mp4Services.factory('user', function($http, $window){
             return $http.get(baseUrl+'/api/user'+id);
         },
         register: function(name, password, thumbnailUrl){
+            console.log("name:" + name);
+            console.log("password:" + password);
+            //console.log("thumbnailUrl" + String(thumbnailUrl));
+            var thumbnail = String(thumbnailUrl);
             return $http.post(baseUrl+'/api/user',{
                 username: name,
-                passwordHash: password,
-                thumbnailUrl: thumbnailUrl
+                password: password,
+                thumbnailUrl: thumbnail
             });
         },
         login: function(name, password){
             return $http.post(baseUrl+'/api/user',{
                 username: name,
-                passwordHash: password
+                password: password
             });
         },
         updateAboutme: function(aboutMe){
