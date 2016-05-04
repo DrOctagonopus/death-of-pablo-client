@@ -11,7 +11,7 @@
     <div class="modal4" ng-click="escapeModal($event);">
         <span ng-click="close()" class="close">X</span>
         <form>
-            <textarea name="des" rows="10" cols="30"></textarea>
+            <textarea name="des" rows="10" cols="30">{{aboutMe}}</textarea>
             <br>
             <button class="button" ng-click="updateUserDescription()">Submit</button>
         </form>
@@ -25,7 +25,7 @@
 
     <br>
     <div class="row">
-        <div class="large-12 columns">
+        <div class="small-offset-1 small-10 large-offset-0 large-12 columns">
             <h3>My Account <small style="color: white;">Personal Account</small></h3>
             <hr/>
         </div>
@@ -34,9 +34,10 @@
  
 <div class="row">
  
-<div class="large-9 columns" role="content">
+<div class="small-offset-1 large-offset-0 large-9 columns" role="content">
 
 <h3><a href="#">My Favorite Singers</a></h3>
+<div ng-if="noSingers">You have no favorite singers now</div>
 <div class="row small-up-2 medium-up-3 large-up-4">
     <div class="column" ng-repeat="singer in singers" ng-click="toSingerPage(singer)">
         <img class="thumbnail" src="http://placehold.it/550x550">
@@ -45,6 +46,16 @@
 </div>
     
 <br />
+<br />
+
+<h3><a href="#">My Favorite Songs</a></h3>
+<div ng-if="noSongs">You have no favorite songs now</div>
+<div class="row small-up-2 medium-up-3 large-up-4">
+    <div class="column" ng-repeat="singer in songs" ng-click="toSongPage(singer)">
+        <img class="thumbnail" src="http://placehold.it/550x550">
+        <h5>{{song.title}}</h5>
+    </div>       
+</div>
     
 
 
@@ -53,20 +64,20 @@
 
 </div>
  
- //username, passwordHash, favSongIds, favArtistIds, aboutMe, thumbnailUrl
-<aside class="large-3 columns" style="">
+<aside id="userInfo" class="small-offset-1 large-offset-0 large-3 columns" style="">
 <h5>My Info</h5>
     <div class="side-nav">
         <img class="thumbnail" src="{{user.thumbnailUrl}}" style="width: 200px;">
         <br />
         <p>User Name: {{user.username}}</p>
-        <p>Total Favorite Singers: {{user.singers}} </p>
+        <p>Total Favorite Singers: {{singerLen}} </p>
+        <p>Total Favorite Songs: {{songLen}} </p>
         <button class="button" ng-click="logout()">Log Out</button>
         <button class="button">Delete Account</button>
     </div>
 <div class="panel">
     <h5>About Me</h5>
-    <p>{{user.aboutMe}}</p>
+    <p>{{aboutMe}}</p>
     <a href="" ng-click="modifyDescription()">Edit it &rarr;</a>
     </div>
 </aside>

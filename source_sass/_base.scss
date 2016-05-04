@@ -567,6 +567,11 @@ body{
     left:auto; 
     transform:skew(8deg) rotate(3deg);
 }
+#userInfo{
+    @media only screen and (max-width: 64em) {
+        float: none;
+    }
+}
 
 
 

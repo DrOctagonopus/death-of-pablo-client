@@ -138,7 +138,7 @@ mp4Services.factory('songs', function($http, $window){
 mp4Services.factory('user', function($http, $window){
     return{
         getOneById: function(id){
-            return $http.get(baseUrl+'/api/user'+id);
+            return $http.get(baseUrl+'/api/user/'+id);
         },
         register: function(name, password, thumbnailUrl){
             console.log("name:" + name);
@@ -152,18 +152,22 @@ mp4Services.factory('user', function($http, $window){
             });
         },
         login: function(name, password){
-            return $http.post(baseUrl+'/api/user',{
+            return $http.get(baseUrl+'/api/user',{
                 username: name,
                 password: password
             });
         },
-        updateAboutme: function(aboutMe){
-            return $http.post(baseUrl+'/api/user',{
+        updateAboutme: function(aboutMe, id){
+            console.log(aboutMe);
+            var curr = baseUrl+'/api/user/'+id;
+            return $http.put(curr, {
                 aboutMe: aboutMe
             });
         }
     };
 });
+
+
 
 
 
