@@ -152,9 +152,11 @@ mp4Services.factory('user', function($http, $window){
             });
         },
         login: function(name, password){
-            return $http.get(baseUrl+'/api/user',{
-                username: name,
-                password: password
+            url = baseUrl+'/api/user';
+            return $http({
+                method: 'GET', 
+                url: url,
+                params: {username: name, password: password}
             });
         },
         updateAboutme: function(aboutMe, id){

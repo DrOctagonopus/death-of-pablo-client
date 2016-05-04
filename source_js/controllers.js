@@ -29,6 +29,8 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
   $scope.url = $window.sessionStorage.baseurl;
     $scope.songs = [];
     $scope.rappers = [];
+    $scope.error = "";
+    $scope.errorlogin = "";
   $scope.toGallery = function(){
       artists.get().success(function(data){ 
           allArtists.setData(data['data'], function(){
@@ -39,7 +41,7 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
       });
   }
   $scope.singinRequest = signinRequest.getData();
-
+  
   $scope.$watch('singinRequest', function(newValue, oldValue){
       if(newValue == true){
           console.log("get request");
@@ -72,6 +74,7 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
       formDisplay.hideAndShow('#login', null);
   }
   $scope.registerUser = function(){
+      $scope.error = "";
       console.log("registerUser");
       //console.log($('#file'));
       var f = $('#file')[0].files[0];
@@ -88,8 +91,20 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
                     console.log(data);
                     $cookieStore.put('username', data['data']['username']);
                     $cookieStore.put('userid', data['data']['_id']);
+                    var curr="/user/"+$cookieStore.get('username');
                     
-                });
+                    $location.path(curr);
+                    
+                }).error(function(data){
+                    console.log("error");
+                    console.log(data); 
+                    if(data['message']['code'] === "11000" || data['message']['code'] === 11000){
+                        $scope.error = "Sorry the username is already used";
+                    }else{
+                        $scope.error ="Sorry, the register failed. Please try later...";
+                    }
+
+               });
           };
           r.readAsDataURL(f);
       }else{
@@ -98,10 +113,18 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
                     console.log(data);
                     $cookieStore.put('userid', data['data']['_id']);
                     $cookieStore.put('username', data['data']['username']);
+                    var curr="/user/"+$cookieStore.get('username');
+                    console.log(curr);
+                    $location.path(curr);
                     
          }).error(function(data){
                 console.log("error");
                 console.log(data); 
+                if(data['message']['code'] === "11000" || data['message']['code'] === 11000){
+                    $scope.error = "Sorry the username is already used";
+                }else{
+                    $scope.error ="Sorry, the register failed. Please try later...";
+                }
                
            });
       }
@@ -110,13 +133,16 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
   }
   
   $scope.loginUser = function(){
+      $scope.errorlogin = "";
       console.log("loginUser");
       user.login($scope.login_name, $scope.login_password).success(function(data){
           $cookieStore.put('userid', data['data']['_id']);
           $cookieStore.put('username', data['data']['username']);
-         
+          var curr="/user/"+$cookieStore.get('username');
+         $location.path(curr);
       }).error(function(resp){
         console.log(resp);
+          $scope.errorlogin = resp['message'];
       });
       
   }
