@@ -87,7 +87,7 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
                 user.register($scope.register_name, $scope.register_password, $scope.register_thumbnail).success(function(data){
                     console.log(data);
                     $cookieStore.put('user', data['data']);
-                    $scookieStore.put('username', data['data']['username']);
+                    $cookieStore.put('username', data['data']['username']);
                     console.log($cookieStore.get('user'));
                 });
           };
@@ -97,7 +97,7 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
           user.register($scope.register_name, $scope.register_password, undefined).success(function(data){
                     console.log(data);
                     $cookieStore.put('user', data['data']);
-                    $scookieStore.put('username', data['data']['username']);
+                    $cookieStore.put('username', data['data']['username']);
                     console.log($cookieStore.get('user'));
          }).error(function(data){
                 console.log("error");
@@ -114,7 +114,9 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
       user.login($scope.login_name, $scope.login_password).success(function(data){
           $cookieStore.put('user', data['data']);
           console.log($cookieStore.get('user'));
-          $scookieStore.put('username', data['data']['username']);
+          $cookieStore.put('username', data['data']['username']);
+      }).error(function(resp){
+        console.log(resp);
       });
       
   }
@@ -413,6 +415,8 @@ mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo
     
     $scope.addAsFavorite = function() {
         console.log('favorite artist');
+        var userId = $cookieStore.get('user')._id;
+        console.log(userId);
     }
 }]);
 
