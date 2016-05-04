@@ -85,11 +85,6 @@ mp4Services.factory('allSongs', function(){
     }
 });
 
-//for communicate with backend
-
-
-//name, songIds, description
-
 mp4Services.factory('artists', function($http, $window) {
     return{
         get: function(){
