@@ -86,7 +86,7 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
                 //console.log($scope.register_thumbnail);
                 user.register($scope.register_name, $scope.register_password, $scope.register_thumbnail).success(function(data){
                     console.log(data);
-                    $cookieStore.put('user', data['data']);
+                    $cookieStore.put('userid', data['data']['id']);
                     $cookieStore.put('username', data['data']['username']);
                     console.log($cookieStore.get('user'));
                 });
@@ -96,8 +96,9 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
           console.log("no picture");
           user.register($scope.register_name, $scope.register_password, undefined).success(function(data){
                     console.log(data);
-                    $cookieStore.put('user', data['data']);
+                    $cookieStore.put('userid', data['data']['id']);
                     $cookieStore.put('username', data['data']['username']);
+                    $cookieStore.put("password", data['data']['password']);
                     console.log($cookieStore.get('user'));
          }).error(function(data){
                 console.log("error");
@@ -112,9 +113,10 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
   $scope.loginUser = function(){
       console.log("loginUser");
       user.login($scope.login_name, $scope.login_password).success(function(data){
-          $cookieStore.put('user', data['data']);
+          $cookieStore.put('userid', data['data']['id']);
           console.log($cookieStore.get('user'));
           $cookieStore.put('username', data['data']['username']);
+          $cookieStore.put("password", data['data']['password']);
       }).error(function(resp){
         console.log(resp);
       });
@@ -534,7 +536,22 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
     $scope.name = $routeParams.name || 'unknown';
     $scope.singers = "";
     $scope.songs = "";
-    $scope.user = $cookieStore.get('user');
+    
+    
+    
+    
+    if($cookieStore.get('userif') !== undefined && $cookieStore.get('userif') !== null){
+        var username = $cookieStore.get('username');
+        var passowrd= $cookieStore.get("password");
+        user.login(username, password).success(function(data){
+          $scope.user = data['data'];
+            console.log(user:---------);
+            console.log($scope.user);
+        }).error(function(resp){
+            console.log(resp);
+        });
+        $scope.user = $cookieStore.get('user');
+    }
     if($scope.user[thumbnailUrl] === undefined || $scope.user[thumbnailUrl] === "")
         $scope.user[thumbnailUrl] = "http://placehold.it/550x550";
     $scope.getSingers = function(){
@@ -582,71 +599,12 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
         }
     }
     $scope.logout = function(){
-        $cookieStore.remove('user');
+        $cookieStore.remove('userid');
         $cookieStore.remove('username');
+        $cookieStore.remove('password');
         $location.path("/settings");
     }
-    //faked user and insgers
-    //name, songIds, description
-    /*$scope.singers = [
-        {
-          "name": "rapper1",
-            "id": 1,
-            "description": "1Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper2",
-            "id": 2,
-            "description": "2Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper3",
-            "id": 3,
-            "description": "3Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper4",
-            "id": 4,
-            "description": "4Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper5",
-            "id": 5,
-            "description": "5Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper6",
-            "id": 6,
-            "description": "6Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-            "name": "rapper7",
-            "id": 7,
-            "description": "7Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        }
-    ];*/
-    //username, passwordHash, favSongIds, favArtistIds,aboutMe, thumbnailUrl
-    /*$scope.user = {
-      "id": "1",
-      "name": "user1",
-      "description": "1Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis.",
-      "favoriteSingers": "7",    
-      "profile": "http://placehold.it/550x550"
-    };*/
+
     $scope.toSingerPage = function(curr){
         console.log("toSingerPage");
         singerInfo.setData(curr);
