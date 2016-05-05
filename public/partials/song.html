@@ -26,6 +26,7 @@
                       <div>Artists: {{singer.name}}</div>
                       <div style="overflow: scroll;">Description:<br /> {{singer.description}}</div>
                       <br />
+                      <button class="button">Add favorite</button>
                   </div>
                   
               </div>
@@ -45,18 +46,17 @@
             
                 <div class="large-3 columns ">
                 <div ng-click="displayModal()" class="panel">
-                    Data1:
+                    Rhymes per Verse:
                     <canvas id="rhymesPerVerseChart" width="300" height="240"></canvas>
                 </div>
                 <br />
                 <div ng-click="displayModal()" class="panel">
-                    Data2:
-                    <img src="http://placehold.it/300x240&text=[data2]"/>
+                    Rhyme Distribution:
+                    <canvas id='rhymeDistributionChart' width='300' height='420'></canvas>
                 </div>
                 <br />
                 <div ng-click="displayModal()" class="panel">
-                    Data3:
-                    <img src="http://placehold.it/300x240&text=[data3]"/>
+                    Vocab Level: {{song.vocabLevel}}
                 </div>
             </div>
  
@@ -67,7 +67,9 @@
 
                     <div id="lyrics" class="large-11 columns">
                         <div>
-                            {{song.lyrics}}
+                            <span ng-repeat="block in lyrics track by $index">
+                                {{block}}<br />
+                            </span>
 
                         </div>
 

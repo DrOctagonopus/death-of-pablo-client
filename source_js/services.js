@@ -93,7 +93,7 @@ mp4Services.factory('artists', function($http, $window) {
             return $http.get(baseUrl+'/api/artists');
         },
         getOne: function(id){
-            return $http.get(baseUrl+'/api/artists'+id);
+            return $http.get(baseUrl+'/api/artists/'+id);
         },
         getArtistsIn: function(arrayOfIds){
             //var curr = baseUrl+'/api/songs?where={"_id":{"$in":'+arrayOfIds+'}}';
@@ -103,7 +103,7 @@ mp4Services.factory('artists', function($http, $window) {
             return $http({
                 method: 'GET', 
                 url: url,
-                params: {_id: {$in: arrayOfIds}}
+                params: {where: {_id: {$in: arrayOfIds}}}
             });
         }
     };
