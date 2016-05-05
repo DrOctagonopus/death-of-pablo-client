@@ -22,7 +22,8 @@
 <div class="medium-7 large-6 columns">
 <h1>{{singer.name}}</h1>
 <p class="subheader">{{singer.description}}</p>
-<button class="button" ng-click='addAsFavorite()'>Favorite It</button>
+<button class="button" ng-if='!isFavorite' ng-click='addAsFavorite()'>Add favorite</button>
+<button class='button' ng-if='isFavorite' ng-click='removeFavorite()'>Unfavorite</button>
 <a href='#/gallery' class="button">More Artists</a>
 </div>
 <div class="show-for-large large-3 columns">
