@@ -62,13 +62,15 @@
             </div>
  
  
-                <div class="large-6 columns">
+                <div class="large-6 columns" style="height: 190vh;">
                 <br />
-                <div class="row">
+                <div class="row" style="height: 190vh;">
 
                     <div id="lyrics" class="large-11 columns">
                         <div>
-                            {{song.lyrics}}
+                            <span ng-repeat="block in lyrics track by $index">
+                                {{block}}<br />
+                            </span>
 
                         </div>
 

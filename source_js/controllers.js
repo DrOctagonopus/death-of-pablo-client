@@ -187,27 +187,17 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
   }
   
   $scope.toSongPage = function(curr){
-        //songInfo.setData(curr);
         var singerIds = curr['artistIds'];
         var curr_path = "song/" + curr['_id'];
         $location.path(curr_path);
-        /*console.log(singerIds);
-        artists.getArtistsIn(singerIds).success(function(data){
-            console.log(data);
-            artistsOfSong.setData(data['data'], function(){
-                console.log(artistsOfSong.getData());
-                var curr_path = "song/" + curr['_id'];
-                $location.path(curr_path);
-            });
-            
-        });*/
+       
         
     }
   $scope.toSingerPage = function(curr){
         //console.log("toSingerPage");
         //singerInfo.setData(curr);
         //console.log(singerInfo.getData());
-        var curr_path = "singer/" + curr.id;
+        var curr_path = "singer/" + curr["_id"];
         $location.path(curr_path);
     }
   
@@ -316,7 +306,7 @@ mp4Controllers.controller('galleryController', ['$scope', '$location',  '$cookie
         //console.log("toSingerPage");
         //singerInfo.setData(curr);
         //console.log(singerInfo.getData());
-        var curr_path = "singer/" + curr.id;
+        var curr_path = "singer/" + curr["_id"];
         $location.path(curr_path);
     }
    
@@ -367,16 +357,12 @@ mp4Controllers.controller('singerController', ['$scope','$routeParams', 'artists
         });
     }
 
-   
-    //console.log("in singer page");
-    //console.log($scope.singer);
+
     
     $scope.closeModal = function(){
       console.log("modal closed");
-      //$(".modal1").css("display", "none"); 
       $( ".modal1").slideUp( "slow", function() {
-              // Animation complete.
-              //$(".modal1").css("display", "none");
+
           });
     }
     $scope.modal = function(){
@@ -471,13 +457,15 @@ mp4Controllers.controller('singerController', ['$scope','$routeParams', 'artists
 
 
 mp4Controllers.controller('songController', ['$scope', '$http', '$routeParams', 'artistsOfSong', 'songs', '$window', '$cookieStore', '$location', 'signinRequest',  'artists', function($scope, $http, $routeParams, artistsOfSong,  songs, $window, $cookieStore, $location, signinRequest,  artists) {
+    $scope.lyrics = "";
     $scope.initData = function(){
         var songid = $routeParams.id;
         songs.getOne(songid).success(function(data){
             if(data !== undefined && data !== null){
                 $scope.song = data['data'];
                 console.log(data);
-                console.log(data['data']);
+                var lyrics = data['data']['lyrics'];
+                $scope.fixlyrics(lyrics);
                 var singerIds = $scope.song.artistIds;
                 console.log(singerIds);
                 artists.getArtistsIn(singerIds).success(function(data){
@@ -488,7 +476,13 @@ mp4Controllers.controller('songController', ['$scope', '$http', '$routeParams', 
         });
     }
     $scope.initData();
-    
+    $scope.fixlyrics = function(lyrics){
+        if(lyrics !== undefined && lyrics !== null){
+                
+            $scope.lyrics = lyrics.split("\n,");
+            console.log($scope.lyrics);
+        }
+    }
     var ctx = document.getElementById("myChart").getContext("2d");
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -510,27 +504,11 @@ mp4Controllers.controller('songController', ['$scope', '$http', '$routeParams', 
         }
     });
     console.log(myChart);
-    //$scope.song = songInfo.getData();
-    //console.log($scope.song);
-    //$scope.singers = artistsOfSong.getData();
-    //$scope.singerNames = "";
-    /*$scope.getSingerNames = function(){
-        var data = artistsOfSong.getData();
-        if(data !== undefined){
-            for(var i=0; i<data.length; i++){
-                $scope.singerNames = $scope.singerNames + ", "+data[i]['name'];
-            }
-        }
-    }*/
-    //$scope.getSingerNames();
-    //console.log($scope.singerNames);
     
      $scope.closeModal = function(){
       console.log("modal closed");
-        //$(".modal1").css("display", "none"); 
         $( ".modal1").slideUp( "slow", function() {
                 // Animation complete.
-                //$(".modal1").css("display", "none");
             });
       }
     $scope.modal = function(){
@@ -562,13 +540,9 @@ mp4Controllers.controller('songController', ['$scope', '$http', '$routeParams', 
     $scope.showSidebar = function(){
         console.log("showSideBar");
         var $parent = $('nav');
-          //$parent.toggleClass("open").toggleClass("close");
           var navState = $parent.hasClass('open') ? "close" : "open";
             $parent.toggleClass('open');
             $parent.toggleClass('close');
-            //console.log('navState: ' +navState);
-          //$(this).attr("title", navState + " navigation");
-                // Set the timeout to the animation length in the CSS.
          setTimeout(function(){
                 console.log("timeout set");
                 $('#menuToggle span').toggleClass("navClosed").toggleClass("navOpen");
@@ -682,24 +656,13 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
         //console.log("toSingerPage");
         //singerInfo.setData(curr);
         //console.log(singerInfo.getData());
-        var curr_path = "singer/" + curr.id;
+        var curr_path = "singer/" + curr["_id"];
         $location.path(curr_path);
     }
      $scope.toSongPage = function(curr){
-        //songInfo.setData(curr);
         var singerIds = curr['artistIds'];
         var curr_path = "song/" + curr['_id'];
         $location.path(curr_path);
-        /*console.log(singerIds);
-        artists.getArtistsIn(singerIds).success(function(data){
-            console.log(data);
-            artistsOfSong.setData(data['data'], function(){
-                console.log(artistsOfSong.getData());
-                var curr_path = "song/" + curr['_id'];
-                $location.path(curr_path);
-            });
-            
-        });*/
         
     }
    
