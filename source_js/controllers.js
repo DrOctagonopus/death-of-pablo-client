@@ -345,6 +345,23 @@ mp4Controllers.controller('galleryController', ['$scope', '$location',  '$cookie
 }]);
 
 mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo', 'artistsOfSong', '$location', '$cookieStore', 'signinRequest', 'songs', 'artists', 'allArtists', 'user', function($scope, singerInfo, songInfo,artistsOfSong, $location, $cookieStore, signinRequest, songs, artists, allArtists, user) {
+    $scope.singer = singerInfo.getData();
+    $scope.singerId = $scope.singer['_id'] || "1";
+    var userId = $cookieStore.get('userid');
+    //console.log('UserId: ' + userId);
+    $scope.isFavorite = false;
+    if(userId != undefined) {
+      user.getOneById(userId)
+        .success(function(resp){
+          $scope.user = resp.data;
+          if($scope.user.favArtistIds.indexOf($scope.singerId) != -1)
+            $scope.isFavorite = true;
+        })
+        .error(function(resp) {
+          console.log('resp');
+        });
+    }
+
     $scope.toGallery = function(){
       artists.get().success(function(data){ 
           allArtists.setData(data['data'], function(){
@@ -353,20 +370,18 @@ mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo
               $location.path("/gallery");
           });
       });
-  }
-    $scope.singer = singerInfo.getData();
-    console.log("in singer page");
-    console.log($scope.singer);
-    $scope.singerId = $scope.singer['_id'] || "1";
-    $scope.getSongsOfSinger = [];
-     $scope.closeModal = function(){
+    }
+    //console.log("in singer page");
+    //console.log($scope.singer);
+    
+    $scope.closeModal = function(){
       console.log("modal closed");
-        //$(".modal1").css("display", "none"); 
-        $( ".modal1").slideUp( "slow", function() {
-                // Animation complete.
-                //$(".modal1").css("display", "none");
-            });
-      }
+      //$(".modal1").css("display", "none"); 
+      $( ".modal1").slideUp( "slow", function() {
+              // Animation complete.
+              //$(".modal1").css("display", "none");
+          });
+    }
     $scope.modal = function(){
           console.log("modal clicked");
             $( ".modal1").slideDown( "slow", function() {
@@ -440,17 +455,28 @@ mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo
     }
     
     $scope.addAsFavorite = function() {
-        console.log('favorite artist');
-        var newUser = $cookieStore.get('user');
-        newUser.favArtistIds.push($scope.singerId);
-        console.log(newUser);
-        user.update($cookieStore.get('user'))
-          .success(function(resp) {
-            console.log('Successfully updated user');
-          })
-          .error(function(resp) {
-            console.log(resp);
-          });
+      console.log('favorite artist');
+      $scope.user.favArtistIds.push($scope.singerId);
+      user.update($scope.user)
+        .success(function(resp) {
+          console.log('Successfully updated user');
+        })
+        .error(function(resp) {
+          console.log(resp);
+        });
+      $scope.isFavorite = true;
+    }
+    $scope.removeFavorite = function() {
+      console.log('remove favorite');
+      $scope.user.favArtistIds.splice($scope.user.favArtistIds.indexOf($scope.singerId), 1);
+      user.update($scope.user)
+        .success(function(resp) {
+          console.log('Successfully updated user');
+        })
+        .error(function(resp) {
+          console.log(resp);
+        });
+      $scope.isFavorite = false;
     }
 }]);
 
