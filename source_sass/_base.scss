@@ -1,5 +1,7 @@
 // Add any custom Sass & CSS here
 @charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Maven+Pro:400,700,500,900);
+
 body{
     background: url(https://f1.bcbits.com/img/a3933750658_10.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
@@ -11,6 +13,8 @@ body{
 .ATagDefault{
     color: white;
 }
+
+
 #register{
     display: none;
     position: fixed;
@@ -119,6 +123,7 @@ body{
         width: 80px;
         padding-left: 10px;
         color: black;
+        font-family: $maven;
         span{
             background-color: black;
             padding-left: 10px;
@@ -393,17 +398,22 @@ body{
                font-size: 4em;
                 /* text-shadow: -1px 0 #ffae00, 0 2px #ffae00, 2px 0 #0a0a0a, 0 -2px #0a0a0a; */
                 color: rgba(216, 8, 8, 0.7);
+                font-family: $maven;
+                font-weight: 900;
                 /* text-decoration: line-through; */
                 width: 600px;
                 margin-left: 100px;
                 #live{
                     text-decoration: line-through;
+                    
                 }
         }
         #death{
                 font-size: 4em;
                 margin-left: 100px;
                 margin-top: -30px;
+                font-family: $maven;
+                font-weight: 700;
         }
         
         margin-top: 15%
@@ -470,10 +480,24 @@ body{
         float: right;
         margin-top: 25px;
     }
+    #statistics{
+        .background{
+                background-color: rgba(255, 255, 255, 0.8);
+                border-radius: 2px;
+                margin-top: 25px;
+                border-radius: 5px;
+        }
+        .data-title{
+            margin-left: 10px;
+            color: #706F6D;
+        }
+    }
     #lyrics{
         overflow: scroll;
         max-height: 120vh;
-        color: darkblue;
+        color: white;
+        background-color: rgba(56, 46, 18, 0.9);
+        border-radius: 5px;
         #red{
            color: white;
             font-weight: bold;
@@ -529,6 +553,7 @@ body{
           @include transition(top $AnimationTime linear, transform $AnimationTime linear); }
       }
     }
+    
     
 }
 .close{
