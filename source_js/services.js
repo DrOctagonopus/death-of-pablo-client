@@ -126,7 +126,7 @@ mp4Services.factory('songs', function($http, $window){
             return $http({
                 method: 'GET', 
                 url: url,
-                params: {_id: {$in: arrayOfIds}}
+                params: {where:{_id: {$in: arrayOfIds}}}
             });
         }
     };

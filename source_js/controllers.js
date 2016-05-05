@@ -24,22 +24,14 @@ mp4Controllers.directive('clickAnywhereButHere', function($document, $parse) {
     }
 });
 
-mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$location', '$cookieStore', 'formDisplay', 'signinRequest', 'artists', 'songs', 'allArtists', 'allSongs', 'singerInfo', 'songInfo', 'artistsOfSong', 'user', function($scope, $window, $location, $cookieStore, formDisplay, signinRequest, artists, songs, allArtists, allSongs, singerInfo, songInfo, artistsOfSong, user) {
+mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$location', '$cookieStore', 'formDisplay', 'signinRequest', 'artists', 'songs', 'allSongs', 'singerInfo', 'songInfo', 'artistsOfSong', 'user', function($scope, $window, $location, $cookieStore, formDisplay, signinRequest, artists, songs, allSongs, singerInfo, songInfo, artistsOfSong, user) {
   var ifmodal = false; //click account in modal
   $scope.url = $window.sessionStorage.baseurl;
     $scope.songs = [];
     $scope.rappers = [];
     $scope.error = "";
     $scope.errorlogin = "";
-  $scope.toGallery = function(){
-      artists.get().success(function(data){ 
-          allArtists.setData(data['data'], function(){
-              //console.log("finish setting allArtists");
-              //console.log(allArtists.getData());
-              $location.path("/gallery");
-          });
-      });
-  }
+ 
   $scope.singinRequest = signinRequest.getData();
   
   $scope.$watch('singinRequest', function(newValue, oldValue){
@@ -120,7 +112,7 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
          }).error(function(data){
                 console.log("error");
                 console.log(data); 
-                if(data['message']['code'] === "11000" || data['message']['code'] === 11000){
+                if(data != null && (data['message']['code'] === "11000" || data['message']['code'] === 11000)){
                     $scope.error = "Sorry the username is already used";
                 }else{
                     $scope.error ="Sorry, the register failed. Please try later...";
@@ -289,19 +281,18 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
 });
 
 
-mp4Controllers.controller('galleryController', ['$scope', '$location',  '$cookieStore', 'singerInfo', 'signinRequest', 'allArtists', 'artists', function($scope, $location, $cookieStore, singerInfo, signinRequest, allArtists, artists) {
-    $scope.toGallery = function(){
-      artists.get().success(function(data){ 
-          allArtists.setData(data['data'], function(){
-              //console.log("finish setting allArtists");
-              //console.log(allArtists.getData());
-              $location.path("/gallery");
-          });
-      });
-  }
-    $scope.singerList = allArtists.getData();
-    console.log(allArtists.getData());
-    $scope.curr = $scope.singerList[1];
+mp4Controllers.controller('galleryController', ['$scope', '$location',  '$cookieStore', 'singerInfo', 'signinRequest',  'artists', function($scope, $location, $cookieStore, singerInfo, signinRequest,  artists) {
+    $scope.initData = function(){
+        artists.get().success(function(data){ 
+            if(data!= undefined && data != null){
+                console.log(data['data'])
+                $scope.singerList = data['data'];
+                $scope.curr = $scope.singerList[1];
+            }
+        });
+    }
+    $scope.initData();
+   
     $scope.displayDetails = function(curr){
         $scope.curr = curr;
     }
@@ -344,16 +335,7 @@ mp4Controllers.controller('galleryController', ['$scope', '$location',  '$cookie
 
 }]);
 
-mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo', 'artistsOfSong', '$location', '$cookieStore', 'signinRequest', 'songs', 'artists', 'allArtists', function($scope, singerInfo, songInfo,artistsOfSong, $location, $cookieStore, signinRequest, songs, artists, allArtists) {
-    $scope.toGallery = function(){
-      artists.get().success(function(data){ 
-          allArtists.setData(data['data'], function(){
-              //console.log("finish setting allArtists");
-              //console.log(allArtists.getData());
-              $location.path("/gallery");
-          });
-      });
-  }
+mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo', 'artistsOfSong', '$location', '$cookieStore', 'signinRequest', 'songs', 'artists', function($scope, singerInfo, songInfo,artistsOfSong, $location, $cookieStore, signinRequest, songs, artists) {
     $scope.singer = singerInfo.getData();
     console.log("in singer page");
     console.log($scope.singer);
@@ -447,17 +429,9 @@ mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo
 }]);
 
 
-mp4Controllers.controller('songController', ['$scope', '$http', 'artistsOfSong', 'songInfo', '$window', '$cookieStore', '$location', 'signinRequest', 'allArtists', 'artists', function($scope, $http, artistsOfSong,  songInfo, $window, $cookieStore, $location, signinRequest, allArtists, artists) {
+mp4Controllers.controller('songController', ['$scope', '$http', 'artistsOfSong', 'songInfo', '$window', '$cookieStore', '$location', 'signinRequest',  'artists', function($scope, $http, artistsOfSong,  songInfo, $window, $cookieStore, $location, signinRequest,  artists) {
     
-    $scope.toGallery = function(){
-      artists.get().success(function(data){ 
-          allArtists.setData(data['data'], function(){
-              //console.log("finish setting allArtists");
-              //console.log(allArtists.getData());
-              $location.path("/gallery");
-          });
-      });
-  }
+    
     console.log("get here1");
     var ctx = document.getElementById("myChart").getContext("2d");
     var myChart = new Chart(ctx, {
@@ -547,16 +521,8 @@ mp4Controllers.controller('songController', ['$scope', '$http', 'artistsOfSong',
 
 }]);
 
-mp4Controllers.controller('userController', ['$scope', '$http','$location', '$routeParams', '$cookieStore', 'singerInfo', 'artists', 'allArtists', 'user', function($scope, $http, $location, $routeParams, $cookieStore, singerInfo, artists, allArtists, user){
-   $scope.toGallery = function(){
-      artists.get().success(function(data){ 
-          allArtists.setData(data['data'], function(){
-              //console.log("finish setting allArtists");
-              //console.log(allArtists.getData());
-              $location.path("/gallery");
-          });
-      });
-  }
+mp4Controllers.controller('userController', ['$scope', '$http','$location', '$routeParams', '$cookieStore', 'singerInfo', 'artists', 'user', function($scope, $http, $location, $routeParams, $cookieStore, singerInfo, artists, user){
+   
     $scope.name = $routeParams.name || 'unknown';
     $scope.singers = "";
     $scope.songs = "";
