@@ -157,10 +157,9 @@ mp4Services.factory('user', function($http, $window){
                 password: password
             });
         },
-        updateAboutme: function(aboutMe){
-            return $http.post(baseUrl+'/api/user',{
-                aboutMe: aboutMe
-            });
+        update: function(newUser) {
+            console.log(newUser);
+            return $http.put(baseUrl+'/api/user/'+newUser._id, newUser);
         }
     };
 });

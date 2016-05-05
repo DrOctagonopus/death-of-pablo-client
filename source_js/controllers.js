@@ -318,7 +318,7 @@ mp4Controllers.controller('galleryController', ['$scope', '$location',  '$cookie
 
 }]);
 
-mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo', 'artistsOfSong', '$location', '$cookieStore', 'signinRequest', 'songs', 'artists', 'allArtists', function($scope, singerInfo, songInfo,artistsOfSong, $location, $cookieStore, signinRequest, songs, artists, allArtists) {
+mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo', 'artistsOfSong', '$location', '$cookieStore', 'signinRequest', 'songs', 'artists', 'allArtists', 'user', function($scope, singerInfo, songInfo,artistsOfSong, $location, $cookieStore, signinRequest, songs, artists, allArtists, user) {
     $scope.toGallery = function(){
       artists.get().success(function(data){ 
           allArtists.setData(data['data'], function(){
@@ -415,8 +415,16 @@ mp4Controllers.controller('singerController', ['$scope', 'singerInfo', 'songInfo
     
     $scope.addAsFavorite = function() {
         console.log('favorite artist');
-        var userId = $cookieStore.get('user')._id;
-        console.log(userId);
+        var newUser = $cookieStore.get('user');
+        newUser.favArtistIds.push($scope.singerId);
+        console.log(newUser);
+        user.update($cookieStore.get('user'))
+          .success(function(resp) {
+            console.log('Successfully updated user');
+          })
+          .error(function(resp) {
+            console.log(resp);
+          });
     }
 }]);
 
