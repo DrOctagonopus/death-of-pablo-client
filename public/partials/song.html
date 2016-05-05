@@ -26,7 +26,8 @@
                       <div>Artists: {{singer.name}}</div>
                       <div style="overflow: scroll;">Description:<br /> {{singer.description}}</div>
                       <br />
-                      <button class="button">Add favorite</button>
+                      <button class="button" ng-if='!isFavorite' ng-click='addFavorite()'>Add favorite</button>
+                      <button class='button' ng-if='isFavorite' ng-click='removeFavorite()'>Unfavorite</button>
                   </div>
                   
               </div>
