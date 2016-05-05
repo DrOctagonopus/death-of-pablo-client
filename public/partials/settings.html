@@ -4,6 +4,7 @@
         <div click-anywhere-but-here="hideRegister" id="inner" class="small-offset-1 small-10 medium-offset-4 medium-6 columns">
           <div class="signup-panel">
             <p class="welcome"> Welcome to this awesome app!</p>
+            <small>{{error}}</small>
             <form>
               <div class="row collapse">
                 <div class="icon small-offset-1 small-1  columns">
@@ -40,6 +41,7 @@
             <form>
               <div class="row column log-in-form">
                 <h4 class="text-center">Log in with you username</h4>
+                <small>{{errorlogin}}</small>
                 <label>User Name
                   <input type="text" placeholder="somebody@example.com" ng-model="login_name">
                 </label>

@@ -29,6 +29,8 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
   $scope.url = $window.sessionStorage.baseurl;
     $scope.songs = [];
     $scope.rappers = [];
+    $scope.error = "";
+    $scope.errorlogin = "";
   $scope.toGallery = function(){
       artists.get().success(function(data){ 
           allArtists.setData(data['data'], function(){
@@ -39,7 +41,7 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
       });
   }
   $scope.singinRequest = signinRequest.getData();
-
+  
   $scope.$watch('singinRequest', function(newValue, oldValue){
       if(newValue == true){
           console.log("get request");
@@ -72,6 +74,7 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
       formDisplay.hideAndShow('#login', null);
   }
   $scope.registerUser = function(){
+      $scope.error = "";
       console.log("registerUser");
       //console.log($('#file'));
       var f = $('#file')[0].files[0];
@@ -86,22 +89,42 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
                 //console.log($scope.register_thumbnail);
                 user.register($scope.register_name, $scope.register_password, $scope.register_thumbnail).success(function(data){
                     console.log(data);
-                    $cookieStore.put('user', data['data']);
                     $cookieStore.put('username', data['data']['username']);
-                    console.log($cookieStore.get('user'));
-                });
+                    $cookieStore.put('userid', data['data']['_id']);
+                    var curr="/user/"+$cookieStore.get('username');
+                    
+                    $location.path(curr);
+                    
+                }).error(function(data){
+                    console.log("error");
+                    console.log(data); 
+                    if(data['message']['code'] === "11000" || data['message']['code'] === 11000){
+                        $scope.error = "Sorry the username is already used";
+                    }else{
+                        $scope.error ="Sorry, the register failed. Please try later...";
+                    }
+
+               });
           };
           r.readAsDataURL(f);
       }else{
           console.log("no picture");
           user.register($scope.register_name, $scope.register_password, undefined).success(function(data){
                     console.log(data);
-                    $cookieStore.put('user', data['data']);
+                    $cookieStore.put('userid', data['data']['_id']);
                     $cookieStore.put('username', data['data']['username']);
-                    console.log($cookieStore.get('user'));
+                    var curr="/user/"+$cookieStore.get('username');
+                    console.log(curr);
+                    $location.path(curr);
+                    
          }).error(function(data){
                 console.log("error");
                 console.log(data); 
+                if(data['message']['code'] === "11000" || data['message']['code'] === 11000){
+                    $scope.error = "Sorry the username is already used";
+                }else{
+                    $scope.error ="Sorry, the register failed. Please try later...";
+                }
                
            });
       }
@@ -110,13 +133,16 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
   }
   
   $scope.loginUser = function(){
+      $scope.errorlogin = "";
       console.log("loginUser");
       user.login($scope.login_name, $scope.login_password).success(function(data){
-          $cookieStore.put('user', data['data']);
-          console.log($cookieStore.get('user'));
+          $cookieStore.put('userid', data['data']['_id']);
           $cookieStore.put('username', data['data']['username']);
+          var curr="/user/"+$cookieStore.get('username');
+         $location.path(curr);
       }).error(function(resp){
         console.log(resp);
+          $scope.errorlogin = resp['message'];
       });
       
   }
@@ -542,19 +568,61 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
     $scope.name = $routeParams.name || 'unknown';
     $scope.singers = "";
     $scope.songs = "";
-    $scope.user = $cookieStore.get('user');
-    if($scope.user[thumbnailUrl] === undefined || $scope.user[thumbnailUrl] === "")
-        $scope.user[thumbnailUrl] = "http://placehold.it/550x550";
-    $scope.getSingers = function(){
-        var singerIds = $scope.user['favArtistIds'];
-        artists.getArtistsIn(singerIds).success(function(data){
-            console.log(data);
-            $scope.singers = data['data'];
-            
+    $scope.singerLen = 0;
+    $scope.songLen = 0;
+    $scope.noSongs = false;
+    $scope.noSingers = false;
+    $scope.aboutMe = "";
+    
+    
+    if($cookieStore.get('userid') !== undefined && $cookieStore.get('userid') !== null){
+        var userid = $cookieStore.get('userid');
+        console.log(userid);
+        user.getOneById(userid).success(function(data){
+          $scope.user = data['data'];
+          if($scope.user['thumbnailUrl'] === undefined || $scope.user['thumbnailUrl'] === "undefined")
+                $scope.user['thumbnailUrl'] = "http://placehold.it/550x550";
+          console.log("user:---------");
+          console.log($scope.user);
+          $scope.aboutMe = data['data']['aboutMe'];
+          $scope.getSingers();
+          $scope.getSongs();
+        }).error(function(resp){
+            console.log(resp);
         });
     }
-    $scope.getSingers();
-    //need to add getSongs();
+    
+    $scope.getSingers = function(){
+        
+        var singerIds = $scope.user['favArtistIds'];
+        if(singerIds !==undefined && singerIds.length !== 0){
+            console.log("getSingers: "+ singerIds);
+            artists.getArtistsIn(singerIds).success(function(data){
+                console.log(data);
+                $scope.singers = data['data'];
+                $scope.singerLen = $scope.singers.length;
+            
+            });
+        }else{
+            $scope.noSingers = true;
+        }
+    }
+    
+    $scope.getSongs = function(){
+        
+        var songIds = $scope.user['favSongIds'];
+        if(songIds !==undefined && songIds.length !== 0){
+            console.log("getSongs: "+ songIds);
+            artists.getSongsIn(songIds).success(function(data){
+                console.log(data);
+                $scope.songs = data['data'];
+                $scope.songLen = $scope.songs.length;
+            
+            });
+        }else{
+            $scope.noSongs = true;
+        }
+    }
     
     $scope.$watch('name', function(newValue, oldValue){
       if(newValue == 'unknown' || newValue !== $cookieStore.get('username')){
@@ -590,71 +658,12 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
         }
     }
     $scope.logout = function(){
-        $cookieStore.remove('user');
+        $cookieStore.remove('userid');
         $cookieStore.remove('username');
+
         $location.path("/settings");
     }
-    //faked user and insgers
-    //name, songIds, description
-    /*$scope.singers = [
-        {
-          "name": "rapper1",
-            "id": 1,
-            "description": "1Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper2",
-            "id": 2,
-            "description": "2Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper3",
-            "id": 3,
-            "description": "3Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper4",
-            "id": 4,
-            "description": "4Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper5",
-            "id": 5,
-            "description": "5Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-          "name": "rapper6",
-            "id": 6,
-            "description": "6Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        },
-        {
-            "name": "rapper7",
-            "id": 7,
-            "description": "7Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis. ",
-            "photo": "http://placehold.it/550x550"
-            
-        }
-    ];*/
-    //username, passwordHash, favSongIds, favArtistIds,aboutMe, thumbnailUrl
-    /*$scope.user = {
-      "id": "1",
-      "name": "user1",
-      "description": "1Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed gravida elit. Maecenas ante erat, aliquet a viverra at, luctus at purus. Sed consectetur vehicula tincidunt. Vestibulum varius turpis sit amet egestas condimentum. Ut suscipit nulla et vehicula rutrum. Duis sodales nec elit vel iaculis.",
-      "favoriteSingers": "7",    
-      "profile": "http://placehold.it/550x550"
-    };*/
+
     $scope.toSingerPage = function(curr){
         console.log("toSingerPage");
         singerInfo.setData(curr);
@@ -662,6 +671,22 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
         var curr_path = "singer/" + curr.id;
         $location.path(curr_path);
     }
+     $scope.toSongPage = function(curr){
+        songInfo.setData(curr);
+        var singerIds = curr['artistIds'];
+        console.log(singerIds);
+        artists.getArtistsIn(singerIds).success(function(data){
+            console.log(data);
+            artistsOfSong.setData(data['data'], function(){
+                console.log(artistsOfSong.getData());
+                var curr_path = "song/" + curr['_id'];
+                $location.path(curr_path);
+            });
+            
+        });
+        
+    }
+   
     $scope.modifyDescription = function(){
         $(".modal4").css("display", "block");
     }
@@ -670,13 +695,17 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
         $(".modal4").css("display", "none"); 
     }
     $scope.updateUserDescription = function(){
+      var userid = $cookieStore.get('userid');
       var text = $("textarea").val();
+      console.log("updateUserDescription");
       console.log(text);
       $(".modal4").css("display", "none"); 
       if(text !== null && text !== undefined){
-          
-          user.updateAboutme().success(function(data){
-              $scope.user.description = text;
+          user.updateAboutme(text, userid).success(function(data){
+              console.log("updated");
+              console.log(data['data']);
+              $scope.aboutMe = text;
+              console.log("aboutMe: " + $scope.aboutMe);
           });
       }
     }
@@ -693,7 +722,7 @@ mp4Controllers.controller('AddSongController', ['$scope', '$http', 'UserService'
     // For later use, like error message display.
     $scope.data = data;
   }
-
+  
   $scope.submitSong = function() {
     UserService.post({
       title: $scope.title,
