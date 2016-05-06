@@ -691,6 +691,9 @@ body{
            color: white;
             font-weight: bold;
         }
+        @media screen and (min-width: 40em){
+            margin-left: 8.33333%;
+        }
     }
     nav 
     {
