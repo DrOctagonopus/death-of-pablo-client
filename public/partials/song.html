@@ -46,13 +46,19 @@
                     <canvas id='rhymeDistributionChart' width='300' height='420'></canvas>
                 </div>
                 <br />
+                <div class="background" class="panel" style="margin-top:-3px">
+                <span class="data-title">SCORE</span>
+                <div class="big-number" style="margin-top:-10px">
+                    {{toFixScore(song.score)}}
+                </div>
+                </div>
             </div>
  
  
                 <div class="large-6 columns">
                 <br />
                 <div class="row">
-                    <div id="lyrics" class="medium-10 small-10 columns  large-12">
+                    <div id="lyrics" class="small-offset-1 medium-10 small-10 columns  large-12">
                         <div>
                             <span ng-repeat="block in lyrics track by $index">
                                 {{block}}<br />
@@ -62,21 +68,21 @@
                     </div>
                 </div>
             </div>
-                <aside class="large-3 medium-12 columns">
+                <aside style="margin-top:15px" class="large-3 medium-12 columns">
                 
                 <div class="section-header">Artists</div>
                   <div ng-repeat="singer in singers">
                       <div class="artist-body">{{singer.name}}</div>
                       <div class="artist-description"> {{singer.description}}</div>
                       <br />
-                      <img ng-src="{{singer.url}}" alt="">
+                      <a href="#/singer/{{singer._id}}"><img ng-src="{{singer.url}}" alt=""></a>
                       <br />
                       <button style="margin-top: 5px" class="btn button" ng-if='!isFavorite' ng-click='addFavorite()'>Add favorite</button>
                       <button style="margin-top: 5px" class='btn button' ng-if='isFavorite' ng-click='removeFavorite()'>Unfavorite</button>
 
                   </div>
                     
-                    <div class="background" class="panel">
+                <div class="background" class="panel">
                 <span class="data-title">RANK</span>
                 <div class="big-number">
                     {{song.rank}}

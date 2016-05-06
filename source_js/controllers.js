@@ -456,6 +456,11 @@ mp4Controllers.controller('singerController', ['$scope','$routeParams', 'artists
 mp4Controllers.controller('songController', ['$scope', '$http', 'artistsOfSong', 'songs', 'user', '$window', '$routeParams', '$cookieStore', '$location', 'signinRequest',  'artists', 
 function($scope, $http, artistsOfSong, songs, user, $window, $routeParams, $cookieStore, $location, signinRequest,  artists) {
     //console.log("get here1");$scope.lyrics = "";
+    $scope.toFixScore = function(score){
+        
+        if(score !== null && score !== undefined)
+            return score.toFixed(0);
+    }
     $scope.initData = function(){
         var songid = $routeParams.id;
         songs.getOne(songid).success(function(data){
@@ -695,9 +700,6 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
         $cookieStore.remove('username');
 
         $location.path("/settings");
-    }
-    $scope.delete = function(){
-        
     }
     $scope.toSingerPage = function(curr){
         //console.log("toSingerPage");
