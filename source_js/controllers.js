@@ -331,6 +331,7 @@ mp4Controllers.controller('singerController', ['$scope','$routeParams', 'artists
                 $scope.getSongsOfSinger();
                
             }
+            console.log($scope.singer.url);
         });
     }
     $scope.initData();
@@ -347,7 +348,7 @@ mp4Controllers.controller('singerController', ['$scope','$routeParams', 'artists
             $scope.isFavorite = true;
         })
         .error(function(resp) {
-          console.log('resp');
+          console.log(resp);
         });
     }
     
