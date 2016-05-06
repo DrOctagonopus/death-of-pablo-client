@@ -749,6 +749,19 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
           */
       }
     }
+    $scope.deleteAccount = function() {
+      if(confirm('Are you sure you want to delete your account?')) {
+        user.delete($scope.user._id)
+          .success(function(resp){
+            console.log('Successfully deleted account');
+            $scope.logout();
+            $location.path('/settings');
+          })
+          .error(function(resp){
+            console.log(resp);
+          })
+      }
+    }
 
 }]);
 
