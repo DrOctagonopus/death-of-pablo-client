@@ -4,7 +4,7 @@ var baseUrl = "http://localhost:4000";
 mp4Services.factory('formDisplay', function(){
     return{
         hideAndShow: function(formHide, formShow){
-            console.log(formHide + ", "+formShow);
+            //console.log(formHide + ", "+formShow);
             if(formHide !== null && formHide !== undefined)
                 $(formHide).css('display', 'none');
             if(formShow !== null && formShow !== undefined)
@@ -85,7 +85,7 @@ mp4Services.factory('artists', function($http, $window) {
             //var curr = baseUrl+'/api/songs?where={"_id":{"$in":'+arrayOfIds+'}}';
             //params: {_id: {$in: arrayofIds}}
             var url = baseUrl +'/api/artists';
-            console.log(arrayOfIds);
+            //console.log(arrayOfIds);
             return $http({
                 method: 'GET', 
                 url: url,
@@ -110,7 +110,7 @@ mp4Services.factory('songs', function($http, $window){
             //var curr = baseUrl+'/api/songs?where={"_id":{"$in":'+arrayOfIds+'}}';
             //params: {_id: {$in: arrayofIds}}
             var url = baseUrl +'/api/songs';
-            console.log(arrayOfIds);
+            //console.log(arrayOfIds);
             return $http({
                 method: 'GET', 
                 url: url,
@@ -129,8 +129,8 @@ mp4Services.factory('user', function($http, $window){
             return $http.get(baseUrl+'/api/user/'+id);
         },
         register: function(name, password, thumbnailUrl){
-            console.log("name:" + name);
-            console.log("password:" + password);
+            //console.log("name:" + name);
+            //console.log("password:" + password);
             //console.log("thumbnailUrl" + String(thumbnailUrl));
             var thumbnail = String(thumbnailUrl);
             return $http.post(baseUrl+'/api/user',{
