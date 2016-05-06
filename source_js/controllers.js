@@ -696,7 +696,6 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
 
         $location.path("/settings");
     }
-
     $scope.toSingerPage = function(curr){
         //console.log("toSingerPage");
         //singerInfo.setData(curr);
