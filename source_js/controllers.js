@@ -331,7 +331,7 @@ mp4Controllers.controller('singerController', ['$scope','$routeParams', 'artists
                 $scope.getSongsOfSinger();
                
             }
-            console.log($scope.singer.url);
+            //console.log($scope.singer.url);
         });
     }
     $scope.initData();
@@ -731,7 +731,7 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
             })
             .error(function(resp) {
               console.log(resp);
-            })
+            });
           /*
           user.updateAboutme(text, userid).success(function(data){
               console.log("updated");
