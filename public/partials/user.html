@@ -20,7 +20,9 @@
         <div id="icon2" ng-click="modal()" class="top-bar-right">
             <i id="listIcon"   class="fa fa-list fa-2x" aria-hidden="true"></i>
         </div>
-        <div class="title-bar-title" >Death Of Pablo</div>
+
+        <div class="title-bar-title" ><a class="ATagDefault" href='#/settings'>Death Of Pablo</a></div>
+
     </div>
 
     <br>
@@ -52,26 +54,28 @@
     </aside>
     <div class="large-pull-3 large-9 columns" role="content">
 
-    <h3 class="fav">My Favorite Singers</h3>
-    <div class="notice" ng-if="noSingers">You have no favorite singers now</div>
-    <div class="row small-up-2 medium-up-3 large-up-4">
-        <div class="column" ng-repeat="singer in singers" ng-click="toSingerPage(singer)">
-            <img class="thumbnail" src="http://placehold.it/550x550">
-            <h5>{{singer.name}}</h5>
-        </div>       
-    </div>
 
-    <br />
-    <br />
+<h3 class="fav">My Favorite Singers</h3>
+<div class="notice" ng-if="noSingers">You have no favorite singers now</div>
+<div class="row small-up-2 medium-up-3 large-up-4">
+    <div class="column" ng-repeat="singer in singers" ng-click="toSingerPage(singer)">
+        <img class="thumbnail" src="{{singer.url}}">
+        <h5>{{singer.name}}</h5>
+    </div>       
+</div>
+    
+<br />
+<br />
 
-    <h3 class="fav">My Favorite Songs</h3>
-    <div class="notice" ng-if="noSongs">You have no favorite songs now</div>
-    <div class="row small-up-2 medium-up-3 large-up-4">
-        <div class="column" ng-repeat="singer in songs" ng-click="toSongPage(singer)">
-            <img class="thumbnail" src="http://placehold.it/550x550">
-            <h5>{{song.title}}</h5>
-        </div>       
-    </div>
+<h3 class="fav">My Favorite Songs</h3>
+<div class="notice" ng-if="noSongs">You have no favorite songs now</div>
+<div class="row small-up-2 medium-up-3 large-up-4">
+    <div class="column" ng-repeat="song in songs" ng-click="toSongPage(singer)">
+        <img class="thumbnail" src="http://simpleicon.com/wp-content/uploads/music-note-1.png">
+        <h5>{{song.title}}</h5>
+    </div>       
+</div>
+    
 
 
 
