@@ -2,6 +2,22 @@
 @charset "UTF-8";
 @import url(https://fonts.googleapis.com/css?family=Maven+Pro:400,700,500,900);
 
+.background {
+    text-align: center;
+}
+
+aside {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.data-title {
+    font-size: 1vmin;
+    letter-spacing: 1vmin;
+    margin-left: 10px;
+    color: #706F6D;
+}
+
 body{
     background: url(https://f1.bcbits.com/img/a3933750658_10.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
@@ -632,19 +648,19 @@ body{
         @include title-section(3.5em);
         color: #222;
         font-family: Lato;
+        background: rgba(255, 255, 255, 0.5);
 
         @media screen and (min-width: 500px) {
             font-size:3em;
         }
         @media screen and (max-width: 499px) {
             font-size: 2.5em;
-        } 
+        }
     }
     #icon4{
         float: right;
         margin-top: 25px;
     }
-    #statistics{
         .background{
                 background-color: rgba(255, 255, 255, 0.8);
                 border-radius: 2px;
@@ -652,13 +668,15 @@ body{
                 border-radius: 5px;
         }
         .data-title{
-            margin-left: 10px;
-            color: #706F6D;
         }
+    
+    #statistics{
     }
     #lyrics{
+        margin: 0 auto;
+        text-align: center;
         overflow: scroll;
-        max-height: 90vh;
+        max-height: 200vh;
         color: white;
         background-color: rgba(56, 46, 18, 0.9);
         border-radius: 5px;
