@@ -1,4 +1,4 @@
-<div class="list" ng-controller='userController'>    
+<div id="account" class="list" ng-controller='userController'>    
     <div class="modal1">
         <span ng-click="closeModal()" class="close">X</span>
         <ul id="menu">
@@ -20,67 +20,66 @@
         <div id="icon2" ng-click="modal()" class="top-bar-right">
             <i id="listIcon"   class="fa fa-list fa-2x" aria-hidden="true"></i>
         </div>
-        <div class="title-bar-title" style="font-family: 'Lato';">Death Of Pablo</div>
+        <div class="title-bar-title" >Death Of Pablo</div>
     </div>
 
     <br>
     <div class="row">
         <div class="small-offset-1 small-10 large-offset-0 large-12 columns">
-            <h3>My Account <small style="color: white;">Personal Account</small></h3>
+            <h3 id="subtitle">My Account <small style="color: white;">Personal Account</small></h3>
             <hr/>
         </div>
     </div>
  
  
-<div class="row">
- 
-<div class="small-offset-1 large-offset-0 large-9 columns" role="content">
+<div class="row" style="max-width: 80%;">
+    <aside id="userInfo" class="large-push-9 large-3 columns" style="">
+    <h5 id="myInfo">My Info</h5>
+        <div class="side-nav">
+            <img class="thumbnail" src="{{user.thumbnailUrl}}" style="width: 200px;">
+            <br />
+            <p id="userName">User Name: {{user.username}}</p>
+            <p id="totalSingers">Total Favorite Singers: {{singerLen}} </p>
+            <p id="totalSongs">Total Favorite Songs: {{songLen}} </p>
+            <button class="button" ng-click="logout()">Log Out</button>
+            <button class="button">Delete Account</button>
+        </div>
+    <div class="panel">
+        <h5 id="aboutme">About Me</h5>
+        <p class="content">{{user.aboutMe}}</p>
+        <a class="content" href="" ng-click="modifyDescription()">Edit it &rarr;</a>
+        </div>
+    </aside>
+    <div class="large-pull-3 large-9 columns" role="content">
 
-<h3>My Favorite Singers</h3>
-<div ng-if="noSingers">You have no favorite singers now</div>
-<div class="row small-up-2 medium-up-3 large-up-4">
-    <div class="column" ng-repeat="singer in singers" ng-click="toSingerPage(singer)">
-        <img class="thumbnail" src="http://placehold.it/550x550">
-        <h5>{{singer.name}}</h5>
-    </div>       
-</div>
-    
-<br />
-<br />
-
-<h3>My Favorite Songs</h3>
-<div ng-if="noSongs">You have no favorite songs now</div>
-<div class="row small-up-2 medium-up-3 large-up-4">
-    <div class="column" ng-repeat="singer in songs" ng-click="toSongPage(singer)">
-        <img class="thumbnail" src="http://placehold.it/550x550">
-        <h5>{{song.title}}</h5>
-    </div>       
-</div>
-    
-
-
-
-
-
-</div>
- 
-<aside id="userInfo" class="small-offset-1 large-offset-0 large-3 columns" style="">
-<h5>My Info</h5>
-    <div class="side-nav">
-        <img class="thumbnail" src="{{user.thumbnailUrl}}" style="width: 200px;">
-        <br />
-        <p>User Name: {{user.username}}</p>
-        <p>Total Favorite Singers: {{singerLen}} </p>
-        <p>Total Favorite Songs: {{songLen}} </p>
-        <button class="button" ng-click="logout()">Log Out</button>
-        <button class="button">Delete Account</button>
+    <h3 class="fav">My Favorite Singers</h3>
+    <div class="notice" ng-if="noSingers">You have no favorite singers now</div>
+    <div class="row small-up-2 medium-up-3 large-up-4">
+        <div class="column" ng-repeat="singer in singers" ng-click="toSingerPage(singer)">
+            <img class="thumbnail" src="http://placehold.it/550x550">
+            <h5>{{singer.name}}</h5>
+        </div>       
     </div>
-<div class="panel">
-    <h5>About Me</h5>
-    <p>{{user.aboutMe}}</p>
-    <a href="" ng-click="modifyDescription()">Edit it &rarr;</a>
+
+    <br />
+    <br />
+
+    <h3 class="fav">My Favorite Songs</h3>
+    <div class="notice" ng-if="noSongs">You have no favorite songs now</div>
+    <div class="row small-up-2 medium-up-3 large-up-4">
+        <div class="column" ng-repeat="singer in songs" ng-click="toSongPage(singer)">
+            <img class="thumbnail" src="http://placehold.it/550x550">
+            <h5>{{song.title}}</h5>
+        </div>       
     </div>
-</aside>
+
+
+
+
+
+
+    </div>
+
  
 </div>
 </div>

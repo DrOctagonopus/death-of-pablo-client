@@ -552,12 +552,51 @@ body{
         }
 
 }
+#account{
+    .title-bar-title{
+        @include font-set(900, 1.5em);
+    }
+    #subtitle{
+        @include font-set(700, 2em);
+        small{
+            @include font-set(100, 0.7em);
+        }
+    }
+    .fav{
+        @include font-set(500, 1.5em);
+        max-width: 300px;
+        color: $yellow;
+        background-color: rgba(0,0,0,0.9);
+        text-align: center;
+    }
+    .notice{
+        @include font-set(100, 1.3em);
+        
+        
+    }
+    #myInfo{
+        @include font-set(300, 1.5em); 
+    }
+    #userInfo{
+        @media only screen and (max-width: 64em) {
+            float: none;
+        }
+        font-family: 'Maven Pro', sans-serif;
+        font-size: 1.1em;
+    }
+    #aboutme{
+        @include font-set(300, 1.5em);
+    }
+    .content{
+        @include font-set(100, 1.1em);
+    }
+}
 
 #song{
     #head{
         color: white;
         font-family: Lato;
-        border: 1px solid yello;
+        border: 1px solid yellow;
         @media screen and (min-width: 500px) {
             font-size:3em;
         }
@@ -665,7 +704,7 @@ body{
 }
 .paper:before, .effect7:after
 {
-	content:"";
+content:"";
     position:absolute; 
     z-index:-1;
     box-shadow:0 0 20px rgba(0,0,0,0.8);
@@ -681,9 +720,3 @@ body{
     left:auto; 
     transform:skew(8deg) rotate(3deg);
 }
-#userInfo{
-    @media only screen and (max-width: 64em) {
-        float: none;
-    }
-}
-
