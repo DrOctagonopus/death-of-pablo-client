@@ -43,13 +43,13 @@
             <p id="userName">User Name: {{user.username}}</p>
             <p id="totalSingers">Total Favorite Singers: {{singerLen}} </p>
             <p id="totalSongs">Total Favorite Songs: {{songLen}} </p>
-            <button class="button" ng-click="logout()">Log Out</button>
-            <button class="button">Delete Account</button>
+            <button class="button btn" ng-click="logout()">Log Out</button>
+            <button class="button btn-rev" ng-click="delete()">Delete Account</button>
         </div>
     <div class="panel">
         <h5 id="aboutme">About Me</h5>
         <p class="content">{{aboutMeText}}</p>
-        <a class="content" href="" ng-click="modifyDescription()">Edit it &rarr;</a>
+        <a class="yellowText content" href="" ng-click="modifyDescription()">Edit it &rarr;</a>
         </div>
     </aside>
     <div class="large-pull-3 large-9 columns" role="content">
