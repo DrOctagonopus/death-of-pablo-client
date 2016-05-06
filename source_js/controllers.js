@@ -603,7 +603,7 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
     $scope.songLen = 0;
     $scope.noSongs = false;
     $scope.noSingers = false;
-    $scope.aboutMe = "";
+    //$scope.aboutMe = "";
     
     
     if($cookieStore.get('userid') !== undefined && $cookieStore.get('userid') !== null){
@@ -615,7 +615,7 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
                 $scope.user['thumbnailUrl'] = "http://placehold.it/550x550";
           console.log("user:---------");
           console.log($scope.user);
-          $scope.aboutMe = data['data']['aboutMe'];
+          //$scope.aboutMe = data['data']['aboutMe'];
           $scope.getSingers();
           $scope.getSongs();
         }).error(function(resp){
@@ -723,12 +723,22 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
       console.log(text);
       $(".modal4").css("display", "none"); 
       if(text !== null && text !== undefined){
+          user.update($scope.user)
+            .success(function(resp) {
+              console.log('Updated about me');
+              $scope.user.aboutMe = text;
+            })
+            .error(function(resp) {
+              console.log(resp);
+            })
+          /*
           user.updateAboutme(text, userid).success(function(data){
               console.log("updated");
               console.log(data['data']);
               $scope.aboutMe = text;
               console.log("aboutMe: " + $scope.aboutMe);
           });
+          */
       }
     }
 
