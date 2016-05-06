@@ -604,6 +604,7 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
     $scope.songLen = 0;
     $scope.noSongs = false;
     $scope.noSingers = false;
+    $scope.aboutMeText = "";
     //$scope.aboutMe = "";
     
     
@@ -717,17 +718,19 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
       console.log("modal closed");
         $(".modal4").css("display", "none"); 
     }
-    $scope.updateUserDescription = function(){
+    $scope.updateUserDescription = function() {
       var userid = $cookieStore.get('userid');
       var text = $("textarea").val();
       console.log("updateUserDescription");
       console.log(text);
       $(".modal4").css("display", "none"); 
       if(text !== null && text !== undefined){
-          user.update($scope.user)
+          
+        $scope.user.aboutMe = text;
+          user.update(temp_user)
             .success(function(resp) {
               console.log('Updated about me');
-              $scope.user.aboutMe = text;
+              $scope.aboutMeText = text;
             })
             .error(function(resp) {
               console.log(resp);
