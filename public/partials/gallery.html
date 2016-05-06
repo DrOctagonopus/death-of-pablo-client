@@ -4,26 +4,28 @@
         <ul id="menu">
             <li style="cursor:pointer" class="menu-text"><a class="ATagDefault" href="#/settings">Main</a></li>
             <li style="cursor:pointer" class="menu-text" ><a class="ATagDefault" href="#/gallery">Gallery</a></li>
-            <li style="cursor:pointer" class="menu-text" ng-click="toAccount()">Account</li>
-            <li style="cursor:pointer" class="menu-text">Contact</li>
+            <li style="cursor:pointer" class="menu-text ATagDefault" ng-click="toAccount()">Account</li>
+            <li style="cursor:pointer" class="menu-text ATagDefault">Contact</li>
         </ul>
         
     </div>
     <div class="off-canvas-wrapper">
         <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
-            <div style="height: 100vh;" class="off-canvas position-left reveal-for-large"  data-off-canvas data-position="left">
+            <div id="sidebar" style="height: 100vh;" class="off-canvas position-left reveal-for-large"  data-off-canvas data-position="left">
                 <div class="row column">
                     <br>
-                    <img class="thumbnail" src="http://placehold.it/550x550">
-                    <h5>{{curr.name}}</h5>
-                    <p>{{curr.description}}</p>
+
+                    <img class="thumbnail" src="{{curr.url}}">
+                    <h5 id="hoveredName">{{curr.name}}</h5>
+                    <p id="hoveredDes">{{curr.description}}</p>
+
                 </div>
     
             </div>
             <div class="off-canvas-content" data-off-canvas-content>
                 <div id="header" class="top-bar primary">
                     <div class="top-bar-left">
-                        <h1 style="font-family: 'Lato';">Gallery<small class="hide-for-medium-only hide-for-small-only" style="font-size: 0.5em; color: white">  a full list of all rappers</small></h1>
+                        <h1 id="headerText">Gallery<small class="hide-for-medium-only hide-for-small-only" style="font-size: 0.5em; color: white">  a full list of all rappers</small></h1>
                     </div>
                     <div id="icon2" ng-click="modal()" class="top-bar-right">
                         <i id="listIcon"   class="fa fa-list fa-2x" aria-hidden="true"></i>
@@ -31,8 +33,9 @@
                 </div>
                 <div id="listArea" class="row small-up-2 medium-up-3 large-up-4">
                     <div id="eachArtist" class="column" ng-repeat="singer in singerList" ng-mouseover="displayDetails(singer)" ng-click="toSingerPage(singer)">
-                        <img class="thumbnail" src="http://placehold.it/550x550">
-                        <h5>{{singer.name}}</h5>
+
+                        <img class="thumbnail" src="{{singer.url}}">
+                        <h5 class="#singerName">{{singer.name}}</h5>
                     </div>       
                 </div>
                

@@ -4,8 +4,8 @@
         <ul id="menu">
             <li style="cursor:pointer" class="menu-text"><a class="ATagDefault" href="#/settings">Main</a></li>
             <li style="cursor:pointer" class="menu-text" ><a class="ATagDefault" href="#/gallery">Gallery</a></li>
-            <li style="cursor:pointer" class="menu-text" ng-click="toAccount()">Account</li>
-            <li style="cursor:pointer" class="menu-text">Contact</li>
+            <li style="cursor:pointer" class="menu-text ATagDefault" ng-click="toAccount()">Account</li>
+            <li style="cursor:pointer" class="menu-text ATagDefault">Contact</li>
         </ul>
     </div>
     <div class="modal4" ng-click="escapeModal($event);">
@@ -20,7 +20,7 @@
         <div id="icon2" ng-click="modal()" class="top-bar-right">
             <i id="listIcon"   class="fa fa-list fa-2x" aria-hidden="true"></i>
         </div>
-        <div class="title-bar-title" style="font-family: 'Lato';">Death Of Pablo</div>
+        <div class="title-bar-title" style="font-family: 'Lato';"><a href='#/settings'>Death Of Pablo</a></div>
     </div>
 
     <br>
@@ -36,11 +36,11 @@
  
 <div class="small-offset-1 large-offset-0 large-9 columns" role="content">
 
-<h3><a href="#">My Favorite Singers</a></h3>
+<h3>My Favorite Singers</h3>
 <div ng-if="noSingers">You have no favorite singers now</div>
 <div class="row small-up-2 medium-up-3 large-up-4">
     <div class="column" ng-repeat="singer in singers" ng-click="toSingerPage(singer)">
-        <img class="thumbnail" src="http://placehold.it/550x550">
+        <img class="thumbnail" src="{{singer.url}}">
         <h5>{{singer.name}}</h5>
     </div>       
 </div>
@@ -48,11 +48,11 @@
 <br />
 <br />
 
-<h3><a href="#">My Favorite Songs</a></h3>
+<h3>My Favorite Songs</h3>
 <div ng-if="noSongs">You have no favorite songs now</div>
 <div class="row small-up-2 medium-up-3 large-up-4">
-    <div class="column" ng-repeat="singer in songs" ng-click="toSongPage(singer)">
-        <img class="thumbnail" src="http://placehold.it/550x550">
+    <div class="column" ng-repeat="song in songs" ng-click="toSongPage(singer)">
+        <img class="thumbnail" src="http://simpleicon.com/wp-content/uploads/music-note-1.png">
         <h5>{{song.title}}</h5>
     </div>       
 </div>

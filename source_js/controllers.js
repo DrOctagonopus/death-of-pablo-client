@@ -331,6 +331,7 @@ mp4Controllers.controller('singerController', ['$scope','$routeParams', 'artists
                 $scope.getSongsOfSinger();
                
             }
+            console.log($scope.singer.url);
         });
     }
     $scope.initData();
@@ -347,7 +348,7 @@ mp4Controllers.controller('singerController', ['$scope','$routeParams', 'artists
             $scope.isFavorite = true;
         })
         .error(function(resp) {
-          console.log('resp');
+          console.log(resp);
         });
     }
     
@@ -388,7 +389,7 @@ mp4Controllers.controller('singerController', ['$scope','$routeParams', 'artists
                 $scope.currLoadedLength  = $scope.songsOfSinger.length;
             }else{
                 $scope.currLoadedLength  = 6;
-                $scope.loadedSongs = $scope.songsOfSinger.slice(0,5);
+                $scope.loadedSongs = $scope.songsOfSinger.slice(0,6);
             }
         });
     }
@@ -408,7 +409,7 @@ mp4Controllers.controller('singerController', ['$scope','$routeParams', 'artists
         if(($scope.currLoadedLength+6) < $scope.songsOfSinger.length){
             console.log("situation 1");
             $scope.currLoadedLength = $scope.currLoadedLength+6;
-            var temp = $scope.currLoadedLength-1;
+            var temp = $scope.currLoadedLength;
             $scope.loadedSongs = $scope.songsOfSinger.slice(0,temp);
         }else if($scope.currLoadedLength >= $scope.songsOfSinger.length){
             console.log("situation 2");

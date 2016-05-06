@@ -2,3 +2,9 @@
 	$font-family: $font-primary;
 	font-size: $size;
 }
+
+@mixin font-set($fontWeight, $fontSize){
+    font-family: 'Maven Pro', sans-serif;
+    font-weight: $fontWeight;
+    font-size: $fontSize;
+}

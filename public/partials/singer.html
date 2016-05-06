@@ -1,12 +1,12 @@
-<div class="list" ng-controller='singerController'>
+<div id="singer" class="list" ng-controller='singerController'>
 
  <div class="modal1">
         <span ng-click="closeModal()" class="close">X</span>
         <ul id="menu">
             <li style="cursor:pointer" class="menu-text"><a class="ATagDefault" href="#/settings">Main</a></li>
             <li style="cursor:pointer" class="menu-text" ><a class="ATagDefault" href="#/gallery">Gallery</a></li>
-            <li style="cursor:pointer" class="menu-text" ng-click="toAccount()">Account</li>
-            <li style="cursor:pointer" class="menu-text">Contact</li>
+            <li style="cursor:pointer" class="menu-text ATagDefault" ng-click="toAccount()">Account</li>
+            <li style="cursor:pointer" class="menu-text ATagDefault">Contact</li>
         </ul>
         
     </div>
@@ -14,20 +14,22 @@
     <div id="icon2" ng-click="modal()" class="top-bar-right">
         <i id="listIcon"   class="fa fa-list fa-2x" aria-hidden="true"></i>
     </div>
-    <div class="title-bar-title" style="font-family: 'Lato';">Death Of Pablo</div>
+    <div class="title-bar-title" style="font-family: 'Lato';"><a class="ATagDefault" href='#/settings'>Death Of Pablo</a></div>
 </div>
  
 <br>
 <div class="row">
-<div class="medium-7 large-6 columns">
-<h1>{{singer.name}}</h1>
-<p class="subheader">{{singer.description}}</p>
-<button class="button" ng-if='!isFavorite' ng-click='addAsFavorite()'>Add favorite</button>
-<button class='button' ng-if='isFavorite' ng-click='removeFavorite()'>Unfavorite</button>
-<a href='#/gallery' class="button">More Artists</a>
+<div id="subtitle" class="medium-7 large-6 columns">
+<h1 id="name">{{singer.name}}</h1>
+<p id="des" class="subheader">{{singer.description}}</p>
+<br />
+<br />
+<button class="btn button" ng-if='!isFavorite' ng-click='addAsFavorite()'>Add favorite</button>
+<button class='btn button' ng-if='isFavorite' ng-click='removeFavorite()'>Unfavorite</button>
+<a id="btn-rev" href='#/gallery' class="button">More Artists</a>
 </div>
 <div class="show-for-large large-3 columns">
-<img src="http://placehold.it/550x550" alt="picture of space">
+<img src="{{singer.url}}" alt="picture of space">
 </div>
 
 </div>
@@ -35,19 +37,21 @@
     <hr>
     </div>
     <div class="row column">
-        <p class="lead">Recent Trending Songs</p>
+        <p id="trend" class="lead">Recent Trending Songs</p>
     </div>
     <div class="row small-up-1 medium-up-2 large-up-3">
         <div class="column" ng-repeat="song in loadedSongs" ng-click="toSongPage(song)">
             <div class="callout">
-                <p>Rank: {{song.rank}}</p>
-                <p><img src="http://placehold.it/550x550" alt="image of a planet called Pegasi B"></p>
-                <p class="lead">Name: {{song.title}}</p>
-                <p class="subheader">Score: {{song.score}}</p>
+
+                <p id="rank">Rank: {{song.rank}}</p>
+                <p><img src="http://simpleicon.com/wp-content/uploads/music-note-1.png" alt="image of a planet called Pegasi B"></p>
+                <p id="songName" class="lead">Name: {{song.title}}</p>
+                <p id="score" class="subheader">Score: {{song.score}}</p>
+
             </div>
         </div>
     </div>
     <div id="more" class="row column">
-            <a class="button hollow expanded" ng-click="loadMoreSongs()">Load More</a>
+            <a id="load" class="button hollow expanded" ng-click="loadMoreSongs()">Load More</a>
     </div>
 </div>
