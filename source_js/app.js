@@ -24,7 +24,8 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'userController'
   }).
   when('/about', {
-    templateUrl: 'partials/about.html'
+    templateUrl: 'partials/about.html',
+    controller: 'aboutController'
   }).
   when('/add_user/', {
     templateUrl: 'partials/add_user.html',

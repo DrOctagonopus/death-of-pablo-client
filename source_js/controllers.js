@@ -306,7 +306,7 @@ mp4Controllers.controller('galleryController', ['$scope', '$location',  '$cookie
    
     $scope.toAccount = function(){
         username = $cookieStore.get('username');
-        if(username == undefined || user== null){
+        if(username == undefined || username== null){
             signinRequest.setData(true, function(){
                 $location.path("/settings");
             });
@@ -367,7 +367,7 @@ mp4Controllers.controller('singerController', ['$scope','$routeParams', 'artists
       }
     $scope.toAccount = function(){
         username = $cookieStore.get('username');
-        if(username == undefined || user== null){
+        if(username == undefined || username== null){
             signinRequest.setData(true, function(){
                 $location.path("/settings");
             });
@@ -548,7 +548,7 @@ function($scope, $http, artistsOfSong, songs, user, $window, $routeParams, $cook
       }
     $scope.toAccount = function(){
         username = $cookieStore.get('username');
-        if(username == undefined || user== null){
+        if(username == undefined || username== null){
             signinRequest.setData(true, function(){
                 $location.path("/settings");
             });
@@ -598,6 +598,60 @@ function($scope, $http, artistsOfSong, songs, user, $window, $routeParams, $cook
         });
       $scope.isFavorite = false;
     };
+}]);
+
+mp4Controllers.controller('aboutController',['$scope', '$location', '$cookieStore', 'signinRequest', function($scope, $location, $cookieStore, signinRequest){
+    console.log("aboutController");
+    $scope.toAccount = function(){
+        console.log("toAccount");
+        username = $cookieStore.get('username');
+        if(username == undefined || username== null){
+            signinRequest.setData(true, function(){
+                $location.path("/settings");
+            });
+        }else{
+            curr_path = "user/"+username;
+            $location.path(curr_path);
+        }
+    }
+    $scope.closeModal = function(){
+      //console.log("modal closed");
+        //$(".modal1").css("display", "none"); 
+      $( ".modal1").slideUp( "slow", function() {
+            ifmodal = false;
+                // Animation complete.
+                //$(".modal1").css("display", "none");
+            });
+  }
+  $scope.modal = function(){
+      //console.log("modal clicked");
+        $( ".modal1").slideDown( "slow", function() {
+            // Animation complete.
+            ifmodal = true;
+        });
+  }
+  $scope.close = function(){
+      //console.log("closed");
+      $("#searchList").css("display", "none");
+      $("#searchbar").animate({
+            marginTop: "-100px"
+      });
+  }
+  $scope.span = function(){
+       
+      $("#searchbar").animate({
+          marginTop: "0px"
+      });
+      artists.get().success(function(data){ 
+          $scope.rappers= data['data'];
+          //console.log($scope.rappers);
+      });
+      songs.get().success(function(data){
+         $scope.songs = data['data'];
+          //console.log($scope.songs);
+      });
+  }
+  
 }]);
 
 mp4Controllers.controller('userController', ['$scope', '$http','$location', '$routeParams', '$cookieStore', 'artists', 'songs', 'user', function($scope, $http, $location, $routeParams, $cookieStore,  artists, songs, user){
@@ -686,7 +740,7 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
       }
     $scope.toAccount = function(){
         username = $cookieStore.get('username');
-        if(username == undefined || user== null){
+        if(username == undefined || username== null){
             signinRequest.setData(true, function(){
                 $location.path("/settings");
             });

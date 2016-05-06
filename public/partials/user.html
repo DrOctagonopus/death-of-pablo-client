@@ -5,7 +5,7 @@
             <li style="cursor:pointer" class="menu-text"><a class="ATagDefault" href="#/settings">Main</a></li>
             <li style="cursor:pointer" class="menu-text" ><a class="ATagDefault" href="#/gallery">Gallery</a></li>
             <li style="cursor:pointer" class="menu-text ATagDefault" ng-click="toAccount()">Account</li>
-            <li style="cursor:pointer" class="menu-text ATagDefault">Contact</li>
+            <li style="cursor:pointer" class="menu-text"><a class='ATagDefault' href='#/about'>About</a></li>
         </ul>
     </div>
     <div class="modal4" ng-click="escapeModal($event);">
@@ -53,10 +53,10 @@
         <a class="yellowText content" href="" ng-click="modifyDescription()">Edit it &rarr;</a>
         </div>
     </aside>
-    <div class="large-pull-3 large-9 columns" role="content">
+    <div class="large-pull-3 large-9 columns" role="content" style="text-align: center">
 
 
-<h3 class="fav">My Favorite Singers</h3>
+<h3 class="fav" style="margin: auto">My Favorite Singers</h3>
 <div class="notice" ng-if="noSingers">You have no favorite singers now</div>
 <div class="row small-up-2 medium-up-3 large-up-4">
     <div class="column" ng-repeat="singer in singers" ng-click="toSingerPage(singer)">
@@ -68,7 +68,7 @@
 <br />
 <br />
 
-<h3 class="fav">My Favorite Songs</h3>
+<h3 class="fav"  style="margin: auto">My Favorite Songs</h3>
 <div class="notice" ng-if="noSongs">You have no favorite songs now</div>
 <div class="row small-up-2 medium-up-3 large-up-4">
     <div class="column" ng-repeat="song in songs" ng-click="toSongPage(singer)">
