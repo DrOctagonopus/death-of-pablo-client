@@ -617,7 +617,7 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
                 $scope.user['thumbnailUrl'] = "http://placehold.it/550x550";
           console.log("user:---------");
           console.log($scope.user);
-          //$scope.aboutMe = data['data']['aboutMe'];
+          $scope.aboutMeText = data['data']['aboutMe'];
           $scope.getSingers();
           $scope.getSongs();
         }).error(function(resp){
@@ -727,7 +727,7 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
       if(text !== null && text !== undefined){
           
         $scope.user.aboutMe = text;
-          user.update(temp_user)
+          user.update($scope.user)
             .success(function(resp) {
               console.log('Updated about me');
               $scope.aboutMeText = text;
