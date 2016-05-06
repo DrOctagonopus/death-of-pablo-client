@@ -72,20 +72,6 @@ mp4Services.factory('allArtists', function(){
         }
     }
 });
-/*
-mp4Services.factory('allSongs', function(){
-    var songs = "";
-    return{
-        getData : function(){
-            return songs;
-        },
-        setData : function(newData, callback){
-            songs = newData;
-            callback();
-        }
-    }
-});
-*/
 
 mp4Services.factory('artists', function($http, $window) {
     return{
@@ -162,8 +148,11 @@ mp4Services.factory('user', function($http, $window){
             });
         },
         update: function(newUser) {
-            console.log(newUser);
+            //console.log(newUser);
             return $http.put(baseUrl+'/api/user/'+newUser._id, newUser);
+        },
+        delete: function(userId) {
+          return $http.delete(baseUrl+'/api/user/'+userId);
         }
     };
 });
