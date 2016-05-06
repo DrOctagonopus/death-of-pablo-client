@@ -18,11 +18,13 @@ body{
 #register{
     display: none;
     position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
     text-align: center;
-    top: 20%;
-    left: 0;
     color: white;
     #inner{
         background-color: rgba(0,0,0,0.8);
@@ -597,7 +599,4 @@ body{
         float: none;
     }
 }
-
-
-
 

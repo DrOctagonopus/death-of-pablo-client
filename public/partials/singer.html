@@ -14,7 +14,7 @@
     <div id="icon2" ng-click="modal()" class="top-bar-right">
         <i id="listIcon"   class="fa fa-list fa-2x" aria-hidden="true"></i>
     </div>
-    <div class="title-bar-title" style="font-family: 'Lato';">Death Of Pablo</div>
+    <div class="title-bar-title" style="font-family: 'Lato';"><a href='#/settings'>Death Of Pablo</a></div>
 </div>
  
 <br>
@@ -41,7 +41,7 @@
         <div class="column" ng-repeat="song in loadedSongs" ng-click="toSongPage(song)">
             <div class="callout">
                 <p>Rank: {{song.rank}}</p>
-                <p><img src="http://placehold.it/550x550" alt="image of a planet called Pegasi B"></p>
+                <p><img src="http://simpleicon.com/wp-content/uploads/music-note-1.png" alt="image of a planet called Pegasi B"></p>
                 <p class="lead">Name: {{song.title}}</p>
                 <p class="subheader">Score: {{song.score}}</p>
             </div>
