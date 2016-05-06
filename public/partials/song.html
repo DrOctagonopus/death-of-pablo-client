@@ -26,7 +26,8 @@
                       <div>Artists: {{singer.name}}</div>
                       <div style="overflow: scroll;">Description:<br /> {{singer.description}}</div>
                       <br />
-                      <button class="button">Add favorite</button>
+                      <button class="button" ng-if='!isFavorite' ng-click='addFavorite()'>Add favorite</button>
+                      <button class='button' ng-if='isFavorite' ng-click='removeFavorite()'>Unfavorite</button>
                   </div>
                   
               </div>
@@ -43,22 +44,19 @@
                 </div>
             </div>
             <div class="row">
-            
                 <div id="statistics" class="large-3 columns ">
                 <div class="background" ng-click="displayModal()" class="panel">
-                    <span class="data-title">Data1:</span>
-                    <canvas id="myChart" width="300" height="240"></canvas>
-                   <!--<img src="http://placehold.it/300x240&text=[data1]"/>-->
+                    <span class="data-title">Rhymes per Verse:</span>
+                    <canvas id="rhymesPerVerseChart" width="300" height="240"></canvas>
                 </div>
                 <br />
                 <div class="background" ng-click="displayModal()" class="panel">
-                    <span class="data-title">Data2:</span>
-                    <img src="http://placehold.it/300x240&text=[data2]"/>
+                    <span class="data-title">Rhyme Distribution:</span>
+                    <canvas id='rhymeDistributionChart' width='300' height='420'></canvas>
                 </div>
                 <br />
-                <div class="background"  ng-click="displayModal()" class="panel">
-                    <span class="data-title">Data3:</span>
-                    <img src="http://placehold.it/300x240&text=[data3]"/>
+                <div class="background" ng-click="displayModal()" class="panel">
+                    <span class="data-title">Vocab Level: {{song.vocabLevel}}</span>
                 </div>
             </div>
  

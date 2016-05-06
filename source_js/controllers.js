@@ -24,7 +24,9 @@ mp4Controllers.directive('clickAnywhereButHere', function($document, $parse) {
     }
 });
 
-mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$location', '$cookieStore', 'formDisplay', 'signinRequest', 'artists', 'songs', 'allSongs', 'artistsOfSong', 'user', function($scope, $window, $location, $cookieStore, formDisplay, signinRequest, artists, songs, allSongs, artistsOfSong, user) {
+//mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$location', '$cookieStore', 'formDisplay', 'signinRequest', 'artists', 'songs','singerInfo', 'songInfo', 'artistsOfSong', 'user', function($scope, $window, $location, $cookieStore, formDisplay, signinRequest, artists, songs, singerInfo, songInfo, artistsOfSong, user) {
+mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$location', '$cookieStore', 'formDisplay', 'signinRequest', 'artists', 'songs', 'artistsOfSong', 'user', function($scope, $window, $location, $cookieStore, formDisplay, signinRequest, artists, songs, artistsOfSong, user) {
+
   var ifmodal = false; //click account in modal
   $scope.url = $window.sessionStorage.baseurl;
     $scope.songs = [];
@@ -51,8 +53,6 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
           curr_path = "user/"+$cookieStore.get('username');
           $location.path(curr_path);
       }
-          
-          
   }
   $scope.hideRegister = function(event){
       //console.log("hide register");
@@ -155,15 +155,9 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
             ifmodal = true;
         });
   }
-  
-  
- 
 
   $scope.ifrapper = true; 
  
-   
-
-  
   $scope.toRapper = function(){
       $scope.ifrapper = true;
       console.log("toRapper");
@@ -271,7 +265,7 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window', '$locatio
     }
 });
 
-
+//mp4Controllers.controller('galleryController', ['$scope', '$location',  '$cookieStore', 'singerInfo', 'signinRequest',  'artists', function($scope, $location, $cookieStore, singerInfo, signinRequest,  artists) {
 mp4Controllers.controller('galleryController', ['$scope', '$location',  '$cookieStore', 'signinRequest',  'artists', function($scope, $location, $cookieStore, signinRequest,  artists) {
     $scope.initData = function(){
         artists.get().success(function(data){ 
@@ -356,8 +350,6 @@ mp4Controllers.controller('singerController', ['$scope','$routeParams', 'artists
           console.log('resp');
         });
     }
-
-
     
     $scope.closeModal = function(){
       console.log("modal closed");
@@ -430,19 +422,24 @@ mp4Controllers.controller('singerController', ['$scope','$routeParams', 'artists
     }
     
     $scope.addAsFavorite = function() {
-      console.log('favorite artist');
-      $scope.user.favArtistIds.push($scope.singerId);
-      user.update($scope.user)
-        .success(function(resp) {
-          console.log('Successfully updated user');
-        })
-        .error(function(resp) {
-          console.log(resp);
-        });
-      $scope.isFavorite = true;
+      //console.log('favorite artist');
+      if($scope.user != undefined) {
+        $scope.user.favArtistIds.push($scope.singerId);
+        user.update($scope.user)
+          .success(function(resp) {
+            console.log('Successfully updated user');
+          })
+          .error(function(resp) {
+            console.log(resp);
+          });
+        $scope.isFavorite = true;
+      }
+      else {
+        console.log('User not logged in');
+      }
     }
     $scope.removeFavorite = function() {
-      console.log('remove favorite');
+      //console.log('remove favorite');
       $scope.user.favArtistIds.splice($scope.user.favArtistIds.indexOf($scope.singerId), 1);
       user.update($scope.user)
         .success(function(resp) {
@@ -455,62 +452,87 @@ mp4Controllers.controller('singerController', ['$scope','$routeParams', 'artists
     }
 }]);
 
-
-mp4Controllers.controller('songController', ['$scope', '$http', '$routeParams', 'artistsOfSong', 'songs', '$window', '$cookieStore', '$location', 'signinRequest',  'artists', function($scope, $http, $routeParams, artistsOfSong,  songs, $window, $cookieStore, $location, signinRequest,  artists) {
-    $scope.lyrics = "";
+mp4Controllers.controller('songController', ['$scope', '$http', 'artistsOfSong', 'songs', 'user', '$window', '$routeParams', '$cookieStore', '$location', 'signinRequest',  'artists', 
+function($scope, $http, artistsOfSong, songs, user, $window, $routeParams, $cookieStore, $location, signinRequest,  artists) {
+    //console.log("get here1");$scope.lyrics = "";
     $scope.initData = function(){
         var songid = $routeParams.id;
         songs.getOne(songid).success(function(data){
-            if(data !== undefined && data !== null){
-                $scope.song = data['data'];
-                console.log(data);
-                var lyrics = data['data']['lyrics'];
-                $scope.fixlyrics(lyrics);
-                var singerIds = $scope.song.artistIds;
-                console.log(singerIds);
-                artists.getArtistsIn(singerIds).success(function(data){
-                    console.log(data);
-                    $scope.singers = data['data'];  
+            $scope.isFavorite = false;
+            $scope.song = data['data'];
+            
+            var userId = $cookieStore.get('userid');
+            if(userId != undefined) {
+              user.getOneById(userId)
+                .success(function(resp){
+                  $scope.user = resp.data;
+                  if($scope.user.favSongIds.indexOf($scope.song._id) != -1)
+                    $scope.isFavorite = true;
+                })
+                .error(function(resp){
+                  console.log(resp);
                 });
             }
+            
+            console.log(data);
+            var lyrics = data['data']['lyrics'];
+            $scope.fixlyrics(lyrics);
+            var singerIds = $scope.song.artistIds;
+            console.log(singerIds);
+            artists.getArtistsIn(singerIds).success(function(data){
+                console.log(data);
+                $scope.singers = data['data'];  
+            });
+            var rhymesPerVerseChart = new Chart($("#rhymesPerVerseChart"), {
+              type: 'line',
+              data: {
+                labels: Array.apply(null, {length:$scope.song.rhymesPerVerse.length}).map(Number.call, Number),
+                datasets: [{
+                    label: '# of rhymes',
+                    data: $scope.song.rhymesPerVerse
+                }]
+              }
+            });
+            
+            var rhymeDistributionChart = new Chart($('#rhymeDistributionChart'), {
+              type: 'pie',
+              data: {
+                labels: [
+                  "Monosyllabic",
+                  "Multisyllabic",
+                ],
+                datasets: [
+                  {
+                      data: [$scope.song.rhymeDistribution, 1 - $scope.song.rhymeDistribution],
+                      backgroundColor: [
+                          "#FF6384",
+                          "#36A2EB",
+                      ],
+                      hoverBackgroundColor: [
+                          "#FF6384",
+                          "#36A2EB",
+                      ]
+                  }]
+              }
+            });
         });
+        
     }
     $scope.initData();
     $scope.fixlyrics = function(lyrics){
         if(lyrics !== undefined && lyrics !== null){
                 
             $scope.lyrics = lyrics.split("\n,");
-            console.log($scope.lyrics);
+            //console.log($scope.lyrics);
         }
     }
-    var ctx = document.getElementById("myChart").getContext("2d");
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3]
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
-    });
-    console.log(myChart);
-    
-     $scope.closeModal = function(){
-      console.log("modal closed");
-        $( ".modal1").slideUp( "slow", function() {
-                // Animation complete.
-            });
-      }
+
+    $scope.closeModal = function(){
+    console.log("modal closed");
+      $( ".modal1").slideUp( "slow", function() {
+              // Animation complete.
+          });
+    }
     $scope.modal = function(){
           console.log("modal clicked");
             $( ".modal1").slideDown( "slow", function() {
@@ -548,11 +570,32 @@ mp4Controllers.controller('songController', ['$scope', '$http', '$routeParams', 
                 $('#menuToggle span').toggleClass("navClosed").toggleClass("navOpen");
         }, 200);
     }
-
+    $scope.addFavorite = function() {
+      $scope.user.favSongIds.push($scope.song._id);
+      user.update($scope.user)
+        .success(function(resp){
+          console.log('Successfully updated user');
+        })
+        .error(function(resp){
+          console.log(resp);
+        });
+      $scope.isFavorite = true;
+    };
+    $scope.removeFavorite = function() {
+      $scope.user.favSongIds.splice($scope.user.favSongIds.indexOf($scope.song._id), 1);
+      user.update($scope.user)
+        .success(function(resp){
+          console.log('Successfully updated user');
+        })
+        .error(function(resp){
+          console.log(resp);
+        });
+      $scope.isFavorite = false;
+    };
 }]);
 
-mp4Controllers.controller('userController', ['$scope', '$http','$location', '$routeParams', '$cookieStore', 'artists', 'user', function($scope, $http, $location, $routeParams, $cookieStore,  artists, user){
-   
+mp4Controllers.controller('userController', ['$scope', '$http','$location', '$routeParams', '$cookieStore', 'artists', 'songs', 'user', function($scope, $http, $location, $routeParams, $cookieStore,  artists, songs, user){
+
     $scope.name = $routeParams.name || 'unknown';
     $scope.singers = "";
     $scope.songs = "";
@@ -601,7 +644,7 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
         var songIds = $scope.user['favSongIds'];
         if(songIds !==undefined && songIds.length !== 0){
             console.log("getSongs: "+ songIds);
-            artists.getSongsIn(songIds).success(function(data){
+            songs.getSongsIn(songIds).success(function(data){
                 console.log(data);
                 $scope.songs = data['data'];
                 $scope.songLen = $scope.songs.length;
@@ -691,6 +734,7 @@ mp4Controllers.controller('userController', ['$scope', '$http','$location', '$ro
 
 }]);
 
+/*
 mp4Controllers.controller('AddSongController', ['$scope', '$http', 'UserService', function($scope, $http, UserService){
   $scope.title = "";
   $scope.lyrics = "";
@@ -711,3 +755,4 @@ mp4Controllers.controller('AddSongController', ['$scope', '$http', 'UserService'
     }, callback, callback);
   };
 }]);
+*/

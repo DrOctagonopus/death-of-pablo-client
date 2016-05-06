@@ -72,6 +72,7 @@ mp4Services.factory('allArtists', function(){
         }
     }
 });
+/*
 mp4Services.factory('allSongs', function(){
     var songs = "";
     return{
@@ -84,6 +85,7 @@ mp4Services.factory('allSongs', function(){
         }
     }
 });
+*/
 
 mp4Services.factory('artists', function($http, $window) {
     return{
