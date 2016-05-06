@@ -484,13 +484,8 @@ body{
         }
         background-color: rgba(255,255,255,0.9);
         &:hover{
-            background-color: rgba(0,0,0,0.9); 
-            #songName{
-                color: $yellow;
-            }
-            #rank{
-                color: $yellow;
-            }
+            background-color: rgba(255,255,255,1);
+            
         }
         
     }
