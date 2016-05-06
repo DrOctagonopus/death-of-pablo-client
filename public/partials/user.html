@@ -36,7 +36,7 @@
  
 <div class="small-offset-1 large-offset-0 large-9 columns" role="content">
 
-<h3><a href="#">My Favorite Singers</a></h3>
+<h3>My Favorite Singers</h3>
 <div ng-if="noSingers">You have no favorite singers now</div>
 <div class="row small-up-2 medium-up-3 large-up-4">
     <div class="column" ng-repeat="singer in singers" ng-click="toSingerPage(singer)">
@@ -48,7 +48,7 @@
 <br />
 <br />
 
-<h3><a href="#">My Favorite Songs</a></h3>
+<h3>My Favorite Songs</h3>
 <div ng-if="noSongs">You have no favorite songs now</div>
 <div class="row small-up-2 medium-up-3 large-up-4">
     <div class="column" ng-repeat="singer in songs" ng-click="toSongPage(singer)">
@@ -77,7 +77,7 @@
     </div>
 <div class="panel">
     <h5>About Me</h5>
-    <p>{{aboutMe}}</p>
+    <p>{{user.aboutMe}}</p>
     <a href="" ng-click="modifyDescription()">Edit it &rarr;</a>
     </div>
 </aside>
