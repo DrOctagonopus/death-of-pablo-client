@@ -1,5 +1,5 @@
 var mp4Services = angular.module('mp4Services', []);
-var baseUrl = "http://localhost:4000";
+var baseUrl = "http://104.236.239.153:4000";
 //for front-end
 mp4Services.factory('formDisplay', function(){
     return{
