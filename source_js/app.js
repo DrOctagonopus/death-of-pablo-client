@@ -20,9 +20,11 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'singerController'
   }).
   when('/user/:name', {
-
     templateUrl: 'partials/user.html',
     controller: 'userController'
+  }).
+  when('/about', {
+    templateUrl: 'partials/about.html'
   }).
   when('/add_user/', {
     templateUrl: 'partials/add_user.html',
