@@ -12,8 +12,18 @@ body{
 
 .ATagDefault{
     color: white;
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 1.1em;
+    &:hover{
+        color: red;
+        
+    }
 }
 
+.large-text{
+    font-family: 'Maven Pro', sans-serif;
+    font-weight: 700;
+}
 
 #register{
     display: none;
@@ -418,15 +428,89 @@ body{
         
         margin-top: 15%
     }
+    #subtitle{
+        #name{
+            @include font-set(900, 2em);  
+        }
+        #des{
+            @include font-set(100, 1.1em);
+            color: white;
+        }
+    }
+    .btn{
+        background-color: rgba(225,0,0,0.8);
+        &:hover{
+            background-color: rgba(225,0,0,1);
+        }
+    }
+    #btn-rev{
+        background-color: rgba(0,0,0,0.9);
+        &:hover{
+            background-color: rgba(0,0,0,1);
+        }
+    }
+    hr{
+        border-bottom: 1px solid black;
+    }
     
 }
-
+#singer{
+    .title-bar{
+        .title-bar-title{
+            @include font-set(900, 1.5em);
+        }
+    }
+    
+    #trend{
+        width: 250px;
+        color: $yellow;
+        background-color: rgba(0,0,0,0.9);
+        text-align: center;
+        font-family: $maven;
+        
+    }
+    .callout{
+        
+        #rank{
+            @include font-set(500, 1.1em);
+        }
+        #songName{
+            @include font-set(700, 1.4em);
+        }
+        .subheader{
+            @include font-set(100, 1.1em);
+        }
+        background-color: rgba(255,255,255,0.9);
+        &:hover{
+            background-color: rgba(0,0,0,0.9); 
+            #songName{
+                color: $yellow;
+            }
+            #rank{
+                color: $yellow;
+            }
+        }
+        
+    }
+    #laod{
+        color: $yellow;
+        border: "1px solid $yellow"
+    }
+}
 #gallery{
         .off-canvas-content{
             background-color: white;
+            #header{
+                #headerText{
+                    @include font-set(700,3em);
+                }
+            }
             #listArea{
                 padding-top: 40px;
                 height: auto;
+                #singerName{
+                    @include font-set(100,1.2em);
+                }
             }
         }
         .off-canvas{
@@ -459,6 +543,14 @@ body{
                 @media screen and (max-width: 649px) {
                     margin-top:-45px;
                 }
+            }
+        }
+        #sidebar{
+            #hoveredName{
+                @include font-set(700,1.5em);
+            }
+            #hoveredDes{
+                @include font-set(500,1.2em);
             }
         }
 
