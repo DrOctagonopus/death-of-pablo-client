@@ -1,1 +1,4 @@
-// Insert your mixins
+@mixin title-section($size: 30px) {
+	$font-family: $font-primary;
+	$font-size: $size;
+}

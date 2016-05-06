@@ -15,21 +15,8 @@
             </div>
         </div>
             <nav class="close">
-              <a ng-click="showSidebar(); $event.stopPropagation();" id="menuToggle" title="show menu">
-                <span class="navClosed">MORE</span>
-              </a>
               <div id="moreInfo">
-                  <h5>Song Name: <br /> {{song.title}}</h5>
-                  <br />
-                  <img src="{{song.cover}}" />
-                  <div ng-repeat="singer in singers">
-                      <div>Artists: {{singer.name}}</div>
-                      <div style="overflow: scroll;">Description:<br /> {{singer.description}}</div>
-                      <br />
-                      <button class="button" ng-if='!isFavorite' ng-click='addFavorite()'>Add favorite</button>
-                      <button class='button' ng-if='isFavorite' ng-click='removeFavorite()'>Unfavorite</button>
-                  </div>
-                  
+              
               </div>
             </nav>
     
@@ -77,7 +64,20 @@
                 </div>
             </div>
                 <aside class="medium-3 small-12 columns">
-                More Statistics
+                <div class="artist-section">Artists</div>
+                  <div ng-repeat="singer in singers">
+                      <div>{{singer.name}}</div>
+                      <div class="artist-d">Description:<br /> {{singer.description}}</div>
+                      <br />
+                      <button class="button" ng-if='!isFavorite' ng-click='addFavorite()'>Add favorite</button>
+                      <button class='button' ng-if='isFavorite' ng-click='removeFavorite()'>Unfavorite</button>
+
+                  </div>
+                                    <h5>Song Name: <br /> {{song.title}}</h5>
+                  <br />
+                  <img src="{{song.cover}}" />
+  
+  
                 <p><img src="http://placehold.it/300x440&text=[ad]"/></p>
                 <p><img src="http://placehold.it/300x440&text=[ad]"/></p>
             </aside>
